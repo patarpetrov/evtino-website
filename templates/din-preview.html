@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block main %}
+<h1>{{post.title}}</h1>
+{% for i in range(5) %}
+    <div class="box">
+        <div class = "content">
+            <div class="image-content">
+                <img class="image" src="{{productslist[i].imagepath}}">
+            </div>
+            <div class="info-content">
+                <h2>{{productslist[i].productname}}</h2>
+                
+                {{productslist[i].content}}
+            </div>
+            <div class="specs-content">
+                <div class="row">
+                    <div class="item"><span class="specs">{{post.spec1}}</span><br>{{productslist[i].spec1answ}}</div>
+                    <div class="item"><span class="specs">{{post.spec2}}</span><br>{{productslist[i].spec2answ}}</div>
+                    <div class="item"><span class="specs">{{post.spec3}}</span><br>{{productslist[i].spec3answ}}</div>
+                </div>
+                <div class="row">
+                    <div class="item"><span class="specs">{{post.spec4}}</span><br>{{productslist[i].spec4answ}}</div>
+                    <div class="item"><span class="specs">{{post.spec5}}</span><br>{{productslist[i].spec5answ}}</div>
+                    <div class="item"><span class="specs">{{post.spec6}}</span><br>{{productslist[i].spec6answ}}</div>
+                </div>
+            </div>
+            <div class="prices-content">
+                <div class="row-price">
+                    <div class="item-price">
+                        <img class="logo" src="./static/images/techo.png">
+                        <button class="button">Провери цена</button>
+                    </div>
+                    <div class="item-price"><img class="logo" src="./static/images/techo.png"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor%}
+{% endblock %}

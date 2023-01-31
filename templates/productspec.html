@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block main %}
+<div id="flexbox">
+    {% for product in products1 %}
+    <a href="/adminnspecpro{{product.id}}">
+    <div class="product-card">
+        <img class = "card-image" src="{{ product.imagesrc }}">
+        <div class = "content">
+            <div class="title-1">
+                <p class="title">{{product.productname}}</p>
+            </div>
+            <div class="price">
+                {% if product.levsale %}
+                <div class="price-old">
+                    <div class="price-old-lev">
+                        {{ product.lev }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st">
+                            {{ product.st}}
+                        </div>
+                        <div class="price-old-lv-text">
+                            лв
+                        </div>
+                    </div>
+                </div>
+                <div class="price-old new">
+                    <div class="price-old-lev black">
+                        {{ product.levsale }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black">
+                            {{ product.stsale }}
+                        </div>
+                        <div class="price-old-lv-text new-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="price-old new">
+                    <div class="price-old-lev black">
+                        {{ product.lev }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black">
+                            {{ product.st}}
+                        </div>
+                        <div class="price-old-lv-text new-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+                <div class="price-old new">
+                    <div class="price-old-lev black">
+                        
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black">
+                            
+                        </div>
+                        <div class="price-old-lv-text new-st">
+                           
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="enter">
+                    <img style="width: 18%;height:75%;float: right;margin-top: 5px;margin-right: 10px; "src="/static/images/arrow-right.png">
+                </div>
+            </div>
+            {% if product.store == "emag" %}
+            <div class="logo">
+                <img style="margin-left: 37.5%; height: 60%; width: 25%; margin-top: 5%;" src="/static/images/emag.png">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</a>
+    {% endfor %}
+</div>
+{% endblock%}

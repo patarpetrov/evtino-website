@@ -1,0 +1,103 @@
+h1 {
+    font-family: var(--font-family-rubik_mono_one);
+    font-weight: 400;
+    letter-spacing: 0;
+    margin-top: 30px;
+    min-height: 40px;
+    min-width: 381px;
+    text-align: center;
+    color: white;
+    font-size: 32px;
+    height: 40px;
+    margin-bottom: 35px;
+}
+.box {
+    width: 70%;
+    margin-left: 5%;
+    height: 150vh;
+    background-color: #F1F1F1;
+    margin-bottom:10%;
+    padding-top:2%;
+    border-radius:10px;
+}
+.image-content{
+    align-items: center;
+}
+.image {
+    margin-top: 2.5%;
+    height: 95%;
+    margin-left: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 95%;
+}
+.content1 {
+    width: 85%;
+    height: 96%;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-rows: 40% 30% 15% 15%;
+}
+.info-content {
+    font-family: var(--font-family-comfortaa);
+    font-size:18px;
+    text-align: justify;
+    padding-left:5%;
+    padding-right:5%;
+}
+h2 {
+    font-family: var(--font-family-rubik_mono_one);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-align: center;
+    font-size: 32px;
+}
+.specs-content{
+    padding-left:5%;
+    padding-right:5%;
+    display: flex;
+    flex-direction: column;
+}
+.row{
+    display: flex;
+    flex: 1;
+}
+.item {
+    flex: 1; /* added */
+    font-family: var(--font-family-comfortaa);
+    font-size:16px;
+    color: #747474;
+    text-align:centr;
+}
+.specs{
+    font-size:20px;
+    font-family: var(--font-family-comfortaa);
+    color: black;
+    text-align:center;
+}
+.prices-content{
+    margin-top:5%;
+    padding-left:5%;
+    padding-right:5%;
+    padding-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+}
+.row-price {
+    display: flex;
+    flex: 1;
+}
+.item-price {
+    flex: 1; /* added */
+    font-family: var(--font-family-comfortaa);
+    font-size:16px;
+    color: #747474;
+    text-align:centr;
+}
+.logo{
+    height:100%;
+}

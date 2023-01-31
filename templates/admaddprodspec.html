@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="./static/homepage.css">
+</head>
+<body>
+    <div class="product-card">
+        <img class = "card-image" src="{{ product.imagesrc }}">
+        <div class = "content">
+            <div class="title-1">
+                <p class="title">{{product.productname}}</p>
+            </div>
+            <div class="price">
+                {% if product.levsale %}
+                <div class="price-old">
+                    <div class="price-old-lev">
+                        {{ product.lev }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st">
+                            {{ product.st}}
+                        </div>
+                        <div class="price-old-lv-text">
+                            лв
+                        </div>
+                    </div>
+                </div>
+                <div class="price-old new">
+                    <div class="price-old-lev black">
+                        {{ product.levsale }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black">
+                            {{ product.stsale }}
+                        </div>
+                        <div class="price-old-lv-text new-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="price-old new">
+                    <div class="price-old-lev black">
+                        {{ product.lev }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black">
+                            {{ product.st}}
+                        </div>
+                        <div class="price-old-lv-text new-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+                <div class="price-old new">
+                    <div class="price-old-lev black">
+                        
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black">
+                            
+                        </div>
+                        <div class="price-old-lv-text new-st">
+                           
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="enter">
+                    <img style="width: 18%;height:75%;float: right;margin-top: 5px;margin-right: 10px; "src="/static/images/arrow-right.png">
+                </div>
+            </div>
+            {% if product.store == "emag" %}
+            <div class="logo">
+                <img style="margin-left: 37.5%; height: 60%; width: 25%; margin-top: 5%;" src="/static/images/emag.png">
+            </div>
+            {% endif %}
+    <form style="width:300px; margin-top: 50px;" action = "/adminnspecpro{{product.id}}" method = "post"  enctype="multipart/form-data">
+        mainimage: <input type="file" name="mainimage" class="form-control" autocomplete="off">
+        image1: <input type="file" name="file1" class="form-control" autocomplete="off"><br>
+        image2: <input type="file" name="file2" class="form-control" autocomplete="off"><br>
+        image3: <input type="file" name="file3" class="form-control" autocomplete="off"><br>
+        image4: <input type="file" name="file4" class="form-control" autocomplete="off"><br>
+        image5: <input type="file" name="file5" class="form-control" autocomplete="off"><br>
+        image6: <input type="file" name="file6" class="form-control" autocomplete="off"><br>
+        image7: <input type="file" name="file7" class="form-control" autocomplete="off"><br>
+
+        link1: <input type="text" name = "link1"><br>
+        link2: <input type="text" name = "link2"><br>
+        link3: <input type="text" name = "link3"><br>
+        link4: <input type="text" name = "link4"><br>
+        link5: <input type="text" name = "link5"><br>
+
+        spec1: <input type="text" name = "spec1"><br>
+        spec2: <input type="text" name = "spec2"><br>
+        spec3: <input type="text" name = "spec3"><br>
+        spec4: <input type="text" name = "spec4"><br>
+        spec5: <input type="text" name = "spec5"><br>
+        spec6: <input type="text" name = "spec6"><br>
+        spec7: <input type="text" name = "spec7"><br>
+        spec8: <input type="text" name = "spec8"><br>
+        spec9: <input type="text" name = "spec9"><br>
+        spec10: <input type="text" name = "spec10"><br>
+        spec11: <input type="text" name = "spec11"><br>
+        spec12: <input type="text" name = "spec12"><br>
+        spec13: <input type="text" name = "spec13"><br>
+        spec14: <input type="text" name = "spec14"><br>
+        spec15: <input type="text" name = "spec15"><br>
+        spec16: <input type="text" name = "spec16"><br>
+        spec17: <input type="text" name = "spec17"><br>
+        spec18: <input type="text" name = "spec18"><br>
+        spec19: <input type="text" name = "spec19"><br>
+        spec20: <input type="text" name = "spec20"><br>
+
+        opisanie: <input type = "text" name = "opisanie" id = "opisanie">
+
+        <input type = "submit">
+        
+    </form>
+</body>
