@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+    {% for statia in statii %}
+        <a href = "/adminstatii{{statia.slug}}">{{ statia.title }}</a><br>
+    {%endfor%}
+</body>

@@ -24,12 +24,7 @@ from functools import wraps
 app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = "secret key"
-
-#class AdminView(ModelView):
-    #def is_accessible(self):
-        #return 
-
-#admin = Admin(app)
+print(os.getenv('AWS_SECRET_ACCESS_KEY'))
 Session(app)
 
 db = SQLAlchemy(app)
@@ -55,7 +50,6 @@ def save_file(file):
     #filename = secure_filename(file.filename)
     new_filename = uuid.uuid4().hex + '.' + file.filename.rsplit('.', 1)[1].lower()
     s3.Bucket(BUCKET_NAME).upload_fileobj(file, new_filename)
-
     return new_filename
 
 def login_required(f):
@@ -150,7 +144,8 @@ def napishi():
             new_filename = ''
             if file.filename == '':
                 message = 'No image selected for uploading'
-                return render_template("din-napishi.html", message = message)
+                pass
+            #render_template("din-napishi.html", message = message)
         
             if file and allowed_file(file.filename):
                 new_filename =  save_file(file)
@@ -158,7 +153,7 @@ def napishi():
             else:
                 print(file)
                 message = 'Allowed image types are - png, jpg, jpeg, gif'
-                return render_template("din-napishi.html", message = message)
+                #return render_template("din-napishi.html", message = message)
                 
         post_new = Post(slug = slug, title = title, category = category, spec1 = specList[0], spec2 = specList[1], spec3 = specList[2], spec4 = specList[3], spec5 = specList[4], spec6 = specList[5])
         db.session.add(post_new)
@@ -273,7 +268,7 @@ def product():
 @login_required
 def prodspec():
     if request.method == "GET": 
-        res = Productstore.query.filter_by(specification = None).all()
+        res = Productstore.query.all()
         return render_template("productspec.html", products1 = res)
 
 @app.route("/adminnspecpro<id>", methods = ["GET", "POST"])
@@ -281,8 +276,8 @@ def prodspec():
 def prodspec1(id):
     if request.method == "GET":
         product = Productstore.query.filter_by(id = id).first()
-       
         return render_template("admaddprodspec.html", product = product)
+
     if request.method == "POST":
         new = Productstorespec()
         files1 = []
@@ -290,55 +285,116 @@ def prodspec1(id):
         res1 = Productstore.query.filter_by(id = id).first()
         files = [request.files['file1'], request.files['file2'], request.files['file3'], request.files['file4'], request.files['file5'], request.files['file6'], request.files['file7'], request.files['mainimage']]
         for file in files:
-            if file.filename != '':
-                if allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    files1.append(app.config['UPLOAD_FOLDER'] + filename)
+            if file.filename != '' and allowed_file(file.filename):
+                #filename = secure_filename(file.filename)
+                #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                new_filename = save_file(file)
+                emag_filename = f"https://evtino.s3.eu-central-1.amazonaws.com/{new_filename}"
+                files1.append(emag_filename)
             else:
                 files1.append('')
 
-        res1.imagesrc = files1[7]
+        if files1[7] != '': res1.imagesrc = files1[7]
         db.session.commit()
-        new.imagepath1 = files1[0]
-        new.imagepath2 = files1[1]
-        new.imagepath3 = files1[2]
-        new.imagepath4 = files1[3]
-        new.imagepath5 = files1[4]
-        new.imagepath6 = files1[5]
-        new.imagepath7 = files1[6]
-        new.link1 = request.form.get("link1")
-        new.link2 = request.form.get("link2")
-        new.link3 = request.form.get("link3")
-        new.link4 = request.form.get("link4")
-        new.link5 = request.form.get("link5")
+        if files1[0] != '':
+            new.imagepath1 = files1[0]
+        if files1[1] != '':
+            new.imagepath2 = files1[1]
+        if files1[2] != '':
+            new.imagepath3 = files1[2]
+        if files1[0] != '':
+            new.imagepath4 = files1[3]
+        if files1[0] != '':
+            new.imagepath5 = files1[4]
+        if files1[0] != '':
+            new.imagepath6 = files1[5]
+        if files1[0] != '':
+            new.imagepath7 = files1[6]
+        if request.form.get('link1') != '':
+            new.link1 = request.form.get("link1")
+        if request.form.get('link2') != '':
+            new.link2 = request.form.get("link2")
+        if request.form.get('link3') != '':
+            new.link3 = request.form.get("link3")
+        if request.form.get('link4') != '':
+            new.link4 = request.form.get("link4")
+        if request.form.get('link5') != '':
+            new.link5 = request.form.get("link5")
 
-        new.spec1 = request.form.get("spec1")
-        new.spec2 = request.form.get("spec2")
-        new.spec3 = request.form.get("spec3")
-        new.spec4 = request.form.get("spec4")
-        new.spec5 = request.form.get("spec5")
-        new.spec6 = request.form.get("spec6")
-        new.spec7 = request.form.get("spec7")
-        new.spec8 = request.form.get("spec8")
-        new.spec9 = request.form.get("spec9")
-        new.spec10 = request.form.get("spec10")
-        new.spec11 = request.form.get("spec11")
-        new.spec12 = request.form.get("spec12")
-        new.spec13 = request.form.get("spec13")
-        new.spec14 = request.form.get("spec14")
-        new.spec15 = request.form.get("spec15")
-        new.spec16 = request.form.get("spec16")
-        new.spec17 = request.form.get("spec17")
-        new.spec18 = request.form.get("spec18")
-        new.spec19 = request.form.get("spec19")
-        new.spec20 = request.form.get("spec20")
+        if request.form.get("spec1") != '': new.spec1 = request.form.get("spec1")
+        if request.form.get("spec2") != '': new.spec2 = request.form.get("spec2")
+        if request.form.get("spec3") != '': new.spec3 = request.form.get("spec3")
+        if request.form.get("spec4") != '': new.spec4 = request.form.get("spec4")
+        if request.form.get("spec5") != '': new.spec5 = request.form.get("spec5")
+        if request.form.get("spec6") != '': new.spec6 = request.form.get("spec6")
+        if request.form.get("spec7") != '': new.spec7 = request.form.get("spec7")
+        if request.form.get("spec8") != '': new.spec8 = request.form.get("spec8")
+        if request.form.get("spec9") != '': new.spec9 = request.form.get("spec9")
+        if request.form.get("spec10") != '': new.spec10 = request.form.get("spec10")
+        if request.form.get("spec11") != '': new.spec11 = request.form.get("spec11")
+        if request.form.get("spec12") != '': new.spec12 = request.form.get("spec12")
+        if request.form.get("spec13") != '': new.spec13 = request.form.get("spec13")
+        if request.form.get("spec14") != '': new.spec14 = request.form.get("spec14")
+        if request.form.get("spec15") != '': new.spec15 = request.form.get("spec15")
+        if request.form.get("spec16") != '': new.spec16 = request.form.get("spec16")
+        if request.form.get("spec17") != '': new.spec17 = request.form.get("spec17")
+        if request.form.get("spec18") != '': new.spec18 = request.form.get("spec18")
+        if request.form.get("spec19") != '': new.spec19 = request.form.get("spec19")
+        if request.form.get("spec20") != '': new.spec20 = request.form.get("spec20")
 
-        new.opisanie = request.form.get("opisanie")
+        if request.form.get("opisanie") != '': new.opisanie = request.form.get("opisanie")
         new.main = res.id
-        if new.opisanie != None and new.spec1 != None and new.spec2 != None and new.spec3 != None and new.spec4 != None and new.imagepath1 != None and new.imagepath2 != None and new.link1 != None:
-            new.ready = True
+        
         db.session.add(new)
-        print("das,d'amfkfkdfa")
         db.session.commit()
         return redirect("/adminnspecpro")
+
+
+@app.route("/adminstatii", methods = ["GET", "POST"])
+@login_required
+def statii():
+    if request.method == "GET":
+        all_statii = db.session.query(Post).all()
+        #print(all_statii)
+        return render_template("vsichkistatii.html", statii = all_statii)
+
+
+@app.route("/adminstatii<slug>", methods = ["GET", "POST"])
+@login_required
+def statii1(slug):
+    if request.method == "GET":
+        statia = db.session.query(Post).filter_by(slug = slug).first()
+        return render_template("adminstatia.html", statia = statia)
+    if request.method == "POST":
+        statia = db.session.query(Post).filter_by(slug = slug).first()
+
+        file = request.files['file']
+        file1 = request.files['file1']
+        file2 = request.files['file2']
+        file3 = request.files['file3']
+        file4 = request.files['file4']
+        files = [file, file1, file2, file3, file4]
+
+        title = request.form.get("title")
+        category = request.form.get("category")
+        slug = request.form.get("slug")
+
+        specList = [request.form.get("spec1"), request.form.get("spec2"), request.form.get("spec3"), request.form.get("spec4"), request.form.get("spec5"), request.form.get("spec6")]
+        product_name=[request.form.get("productname"), request.form.get("productname1"), request.form.get("productname2"), request.form.get("productname3"), request.form.get("productname4")]
+        content = [request.form.get("content"), request.form.get("content1"), request.form.get("content2"), request.form.get("content3"), request.form.get("content4")]
+        spec1answ = [request.form.get("1spec1answ"), request.form.get("1spec2answ"), request.form.get("1spec3answ"), request.form.get("1spec4answ"), request.form.get("1spec5answ"), request.form.get("1spec6answ")]
+        spec2answ = [request.form.get("2spec1answ"), request.form.get("2spec2answ"), request.form.get("2spec3answ"), request.form.get("2spec4answ"), request.form.get("2spec5answ"), request.form.get("2spec6answ")]
+        spec3answ = [request.form.get("3spec1answ"), request.form.get("3spec2answ"), request.form.get("3spec3answ"), request.form.get("3spec4answ"), request.form.get("3spec5answ"), request.form.get("3spec6answ")]
+        spec4answ = [request.form.get("4spec1answ"), request.form.get("4spec2answ"), request.form.get("4spec3answ"), request.form.get("4spec4answ"), request.form.get("4spec5answ"), request.form.get("4spec6answ")]
+        spec5answ = [request.form.get("5spec1answ"), request.form.get("5spec2answ"), request.form.get("5spec3answ"), request.form.get("5spec4answ"), request.form.get("5spec5answ"), request.form.get("5spec6answ")]
+
+        for i in range(5):
+            if specList[i] != '': statia.spec1
+            if specList[i] != '': statia.spec1
+            if specList[i] != '': statia.spec1
+            if specList[i] != '': statia.spec1
+            if specList[i] != '': statia.spec1
+            if specList[i] != '': statia.spec1
+
+
+
