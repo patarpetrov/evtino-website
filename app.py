@@ -7,6 +7,9 @@ from flask_admin.contrib.sqla import ModelView
 from sqlalchemy import ForeignKey
 from bs4 import BeautifulSoup
 import requests
+import boto3
+import uuid
+
 
 from config import Config
 #from statii.blueprint import statii
@@ -31,7 +34,6 @@ Session(app)
 
 db = SQLAlchemy(app)
 from models import *
-
 #admin.add_view(ModelView(Post, db.session))
 #admin.add_view(ModelView(Products, db.session))
 
@@ -40,13 +42,21 @@ with app.app_context():
     #db.create_all()
     pass
 
-
+BUCKET_NAME = "evtino"
+#s3 = boto3.client("s3", aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID'), aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY'))
+s3 = boto3.resource("s3")
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
  
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def save_file(file):
+    #filename = secure_filename(file.filename)
+    new_filename = uuid.uuid4().hex + '.' + file.filename.rsplit('.', 1)[1].lower()
+    s3.Bucket(BUCKET_NAME).upload_fileobj(file, new_filename)
+
+    return new_filename
 
 def login_required(f):
     """
@@ -115,10 +125,6 @@ def napishi():
     if request.method == "GET":
         return render_template("din-napishi.html")
     if request.method == "POST":
-        if 'file' not in request.files:
-            flash('No file part')
-            print(request.url)
-            return redirect(request.url)
         files1 =[]
         file = request.files['file']
         file1 = request.files['file1']
@@ -133,7 +139,6 @@ def napishi():
 
         specList = [request.form.get("spec1"), request.form.get("spec2"), request.form.get("spec3"), request.form.get("spec4"), request.form.get("spec5"), request.form.get("spec6")]
         product_name=[request.form.get("productname"), request.form.get("productname1"), request.form.get("productname2"), request.form.get("productname3"), request.form.get("productname4")]
-        id = [request.form.get("id"), request.form.get("id1"), request.form.get("id2"), request.form.get("id3"), request.form.get("id4")]
         content = [request.form.get("content"), request.form.get("content1"), request.form.get("content2"), request.form.get("content3"), request.form.get("content4")]
         spec1answ = [request.form.get("1spec1answ"), request.form.get("1spec2answ"), request.form.get("1spec3answ"), request.form.get("1spec4answ"), request.form.get("1spec5answ"), request.form.get("1spec6answ")]
         spec2answ = [request.form.get("2spec1answ"), request.form.get("2spec2answ"), request.form.get("2spec3answ"), request.form.get("2spec4answ"), request.form.get("2spec5answ"), request.form.get("2spec6answ")]
@@ -141,31 +146,26 @@ def napishi():
         spec4answ = [request.form.get("4spec1answ"), request.form.get("4spec2answ"), request.form.get("4spec3answ"), request.form.get("4spec4answ"), request.form.get("4spec5answ"), request.form.get("4spec6answ")]
         spec5answ = [request.form.get("5spec1answ"), request.form.get("5spec2answ"), request.form.get("5spec3answ"), request.form.get("5spec4answ"), request.form.get("5spec5answ"), request.form.get("5spec6answ")]
 
-        fileconfirmed = []
         for file in files:
+            new_filename = ''
             if file.filename == '':
-                flash('No image selected for uploading')
-                print(request.url)
-                return render_template("din-napishi.html")
+                message = 'No image selected for uploading'
+                return render_template("din-napishi.html", message = message)
         
             if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                #print('upload_image filename: ' + filename)
-                flash('Image successfully uploaded and displayed below')
-                fileconfirmed.append(filename)
+                new_filename =  save_file(file)
+                files1.append(new_filename)
             else:
                 print(file)
-                flash('Allowed image types are - png, jpg, jpeg, gif')
-                print(request.url)
-                return render_template("din-napishi.html")
-            files1.append(app.config['UPLOAD_FOLDER'] + filename)
+                message = 'Allowed image types are - png, jpg, jpeg, gif'
+                return render_template("din-napishi.html", message = message)
+                
         post_new = Post(slug = slug, title = title, category = category, spec1 = specList[0], spec2 = specList[1], spec3 = specList[2], spec4 = specList[3], spec5 = specList[4], spec6 = specList[5])
         db.session.add(post_new)
         db.session.commit()
     
         obj = db.session.query(Post).order_by(Post.id.desc()).first()
-        print(type(obj))
+        
         products = Products(store = "emag", pageused = obj, productname = product_name[0], imagepath = files1[0], content = content[0], spec1answ = spec1answ[0], spec2answ = spec1answ[1], spec3answ = spec1answ[2], spec4answ = spec1answ[3], spec5answ = spec1answ[4], spec6answ = spec1answ[5])
         products1 = Products(store = "emag", pageused = obj, productname = product_name[1], imagepath = files1[1], content = content[1], spec1answ = spec2answ[0], spec2answ = spec2answ[1], spec3answ = spec2answ[2], spec4answ = spec2answ[3], spec5answ = spec2answ[4], spec6answ = spec2answ[5])
         products2 = Products(store = "emag", pageused = obj, productname = product_name[2], imagepath = files1[2], content = content[2], spec1answ = spec3answ[0], spec2answ = spec3answ[1], spec3answ = spec3answ[2], spec4answ = spec3answ[3], spec5answ = spec3answ[4], spec6answ = spec3answ[5])
@@ -178,11 +178,6 @@ def napishi():
         db.session.add(products3)
         db.session.add(products4)
         db.session.commit()
-        res1 = Post.query.all()
-        res2 = Products.query.all()
-        print(res1)
-        print(res2)
-
         return render_template("statii.html", statia = post_new, productslist = products_list)
 
 @app.route("/adminproduct", methods = ["GET", "POST"])

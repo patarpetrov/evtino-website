@@ -3,6 +3,9 @@
 
 </body>
 <head>
+    {% if message %}
+        <p>{{message}}</p>
+    {%endif%}
     <form method="post" action="/adminnapishi" enctype="multipart/form-data">
         <dl>
             Title
