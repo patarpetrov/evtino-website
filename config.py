@@ -6,7 +6,7 @@ UPLOAD_FOLDER_DIR = 'static/uploads/'
 
 class Config:
     FLASK_DEBUG = "1"
-    SQLALCHEMY_DATABASE_URI = 'postgres://evtino_user:7Gn99jhwihLA8EVcNIZCdI1fZhIt7IqG@dpg-cfcis3en6mpierpgf3h0-a/evtino'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://evtino_user:7Gn99jhwihLA8EVcNIZCdI1fZhIt7IqG@dpg-cfcis3en6mpierpgf3h0-a.frankfurt-postgres.render.com/evtino'
     TEMPLATES_AUTO_RELOAD = True
     SESSION_PERMANENT = False
     SESSION_TYPE = "filesystem"
