@@ -1,9 +1,14 @@
-<!DOCTYPE html>
-<head>
-    <link rel="stylesheet" href="./static/homepage.css">
-</head>
-<body>
-    <div class="product-card">
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="./static/productsall.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
+{% endblock %}
+
+{% block main %}
+<div class= "category-background">
+    {% for product in smartphones %}
+    <div class="product-card swiper-slide">
         <img class = "card-image" src="{{ product.imagesrc }}">
         <div class = "content">
             <div class="title-1">
@@ -74,48 +79,8 @@
                 <img style="margin-left: 37.5%; height: 60%; width: 25%; margin-top: 5%;" src="/static/images/emag.png">
             </div>
             {% endif %}
-    <form style="width:300px; margin-top: 50px;" action = "/adminnspecpro{{product.id}}" method = "post"  enctype="multipart/form-data">
-        mainimage: <input type="file" name="mainimage" class="form-control" autocomplete="off">
-        category: <input type="text" name="category">
-
-        image1: <input type="file" name="file1" class="form-control" autocomplete="off"><br>
-        image2: <input type="file" name="file2" class="form-control" autocomplete="off"><br>
-        image3: <input type="file" name="file3" class="form-control" autocomplete="off"><br>
-        image4: <input type="file" name="file4" class="form-control" autocomplete="off"><br>
-        image5: <input type="file" name="file5" class="form-control" autocomplete="off"><br>
-        image6: <input type="file" name="file6" class="form-control" autocomplete="off"><br>
-        image7: <input type="file" name="file7" class="form-control" autocomplete="off"><br>
-
-        link1: <input type="text" name = "link1"><br>
-        link2: <input type="text" name = "link2"><br>
-        link3: <input type="text" name = "link3"><br>
-        link4: <input type="text" name = "link4"><br>
-        link5: <input type="text" name = "link5"><br>
-
-        spec1: <input type="text" name = "spec1"><br>
-        spec2: <input type="text" name = "spec2"><br>
-        spec3: <input type="text" name = "spec3"><br>
-        spec4: <input type="text" name = "spec4"><br>
-        spec5: <input type="text" name = "spec5"><br>
-        spec6: <input type="text" name = "spec6"><br>
-        spec7: <input type="text" name = "spec7"><br>
-        spec8: <input type="text" name = "spec8"><br>
-        spec9: <input type="text" name = "spec9"><br>
-        spec10: <input type="text" name = "spec10"><br>
-        spec11: <input type="text" name = "spec11"><br>
-        spec12: <input type="text" name = "spec12"><br>
-        spec13: <input type="text" name = "spec13"><br>
-        spec14: <input type="text" name = "spec14"><br>
-        spec15: <input type="text" name = "spec15"><br>
-        spec16: <input type="text" name = "spec16"><br>
-        spec17: <input type="text" name = "spec17"><br>
-        spec18: <input type="text" name = "spec18"><br>
-        spec19: <input type="text" name = "spec19"><br>
-        spec20: <input type="text" name = "spec20"><br>
-
-        opisanie: <input type = "text" name = "opisanie" id = "opisanie">
-
-        <input type = "submit">
-        
-    </form>
-</body>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{%endblock%}

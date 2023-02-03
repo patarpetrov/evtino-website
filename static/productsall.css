@@ -1,0 +1,10 @@
+.category-background{
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 3%;
+    margin-right: 5%;
+    background-color: #F1F1FF;
+    height: 450px;
+    border-radius: 10px;
+    display: flex;
+}

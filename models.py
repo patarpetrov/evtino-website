@@ -41,7 +41,7 @@ class Products(db.Model):
 class Productstore (db.Model):
     id = db.Column(db.Integer, primary_key = True)
     productname = db.Column(db.String)
-    category = db.String(db.String)
+    category = db.Column(db.String)
     store = db.Column(db.String)
     lev = db.Column(db.Integer)
     st = db.Column(db.String)

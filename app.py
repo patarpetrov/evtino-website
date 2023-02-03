@@ -33,14 +33,14 @@ from models import *
 #admin.add_view(ModelView(Products, db.session))
 
 with app.app_context():
-    #Productstorespec.__table__.drop(db.engine)
-    #db.create_all()
-    pass
+    #Productstore.__table__.drop(db.engine)
+    db.create_all()
 
 BUCKET_NAME = "evtino"
 #s3 = boto3.client("s3", aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID'), aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY'))
 s3 = boto3.resource("s3")
 
+ALLOWED_CATEGORIES = set(['smartphone', 'laptop', ''])
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
  
 def allowed_file(filename):
@@ -197,10 +197,10 @@ def product():
             for product in products:
                 productname1 = product.find('a', class_ = "card-v2-title semibold mrg-btm-xxs js-product-url").text.replace("  ", "")
                 image1 = product.find('img')["src"]
-                price = int(product.find('p', class_ = "product-new-price").text.replace(" лв", "").replace(".", "").replace(",", "").replace(".", ""))
+                price = int(product.find('p', class_ = "product-new-price").text.replace(" лв", "").replace(".", "").replace(",", "").replace(".", "").replace("от ", ""))
                 st1 = f'{(price%100):02}'
 
-                new_product = Productstore(store = "emag", productname = productname1, imagesrc = image1, lev = price//100, st = st1)
+                new_product = Productstore(category = '', store = "emag", productname = productname1, imagesrc = image1, lev = price//100, st = st1)
                 exist = Productstore.query.filter_by(productname = new_product.productname).first()
                 print(new_product.productname)
                 nochange = 0
@@ -234,7 +234,7 @@ def product():
                 price = int(product.find('span', class_ = "product-box__price-value").text.replace(" лв", "").replace(".", "").replace(",", "").replace(".", "").replace(" ", ""))
                 st1 = str(product.find('sup').text)
 
-                new_product = Productstore(store = "technopolis", productname = productname1, lev = price, st = st1)
+                new_product = Productstore(category = '', store = "technopolis", productname = productname1, lev = price, st = st1)
                 exist = Productstore.query.filter_by(productname = new_product.productname).first()
                 nochange = 0
                 if exist:
@@ -294,6 +294,7 @@ def prodspec1(id):
             else:
                 files1.append('')
 
+        if request.form.get('category') != '' : res1.category = request.form.get('category')
         if files1[7] != '': res1.imagesrc = files1[7]
         db.session.commit()
         if files1[0] != '':

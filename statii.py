@@ -6,6 +6,7 @@ statii = Blueprint('statii', __name__, template_folder= 'templates', static_fold
 
 @statii.route('/')
 def index():
+    print("!")
     res = Post.query.first()
     
     return render_template("statii.html", statia = res)
