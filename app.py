@@ -4,7 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, create_engine
+from sqlalchemy_utils import database_exists, create_database
+from sqlalchemy.orm import sessionmaker
 from bs4 import BeautifulSoup
 import requests
 import boto3
@@ -12,7 +14,10 @@ import uuid
 
 
 from config import Config
-#from statii.blueprint import statii
+url = 'postgresql://evtino_user:7Gn99jhwihLA8EVcNIZCdI1fZhIt7IqG@dpg-cfcis3en6mpierpgf3h0-a.frankfurt-postgres.render.com/evtino'
+engine = create_engine('postgresql://evtino_user:7Gn99jhwihLA8EVcNIZCdI1fZhIt7IqG@dpg-cfcis3en6mpierpgf3h0-a.frankfurt-postgres.render.com/evtino')
+conn = engine.connect()
+
 
 import json
 import urllib.request
@@ -29,8 +34,9 @@ Session(app)
 
 db = SQLAlchemy(app)
 from models import *
-#admin.add_view(ModelView(Post, db.session))
-#admin.add_view(ModelView(Products, db.session))
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+sessiondb = Session()
 
 with app.app_context():
     #Productstore.__table__.drop(db.engine)
@@ -132,6 +138,7 @@ def napishi():
         slug = request.form.get("slug")
 
         specList = [request.form.get("spec1"), request.form.get("spec2"), request.form.get("spec3"), request.form.get("spec4"), request.form.get("spec5"), request.form.get("spec6")]
+        id1 = [request.form.get("id"), request.form.get("id1"), request.form.get("id2"), request.form.get("id3"), request.form.get("id4")]
         product_name=[request.form.get("productname"), request.form.get("productname1"), request.form.get("productname2"), request.form.get("productname3"), request.form.get("productname4")]
         content = [request.form.get("content"), request.form.get("content1"), request.form.get("content2"), request.form.get("content3"), request.form.get("content4")]
         spec1answ = [request.form.get("1spec1answ"), request.form.get("1spec2answ"), request.form.get("1spec3answ"), request.form.get("1spec4answ"), request.form.get("1spec5answ"), request.form.get("1spec6answ")]
@@ -156,23 +163,23 @@ def napishi():
                 #return render_template("din-napishi.html", message = message)
                 
         post_new = Post(slug = slug, title = title, category = category, spec1 = specList[0], spec2 = specList[1], spec3 = specList[2], spec4 = specList[3], spec5 = specList[4], spec6 = specList[5])
-        db.session.add(post_new)
-        db.session.commit()
+        sessiondb.add(post_new)
+        sessiondb.commit()
     
-        obj = db.session.query(Post).order_by(Post.id.desc()).first()
+        obj = sessiondb.query(Post).order_by(Post.id.desc()).first()
         
-        products = Products(store = "emag", pageused = obj, productname = product_name[0], imagepath = files1[0], content = content[0], spec1answ = spec1answ[0], spec2answ = spec1answ[1], spec3answ = spec1answ[2], spec4answ = spec1answ[3], spec5answ = spec1answ[4], spec6answ = spec1answ[5])
-        products1 = Products(store = "emag", pageused = obj, productname = product_name[1], imagepath = files1[1], content = content[1], spec1answ = spec2answ[0], spec2answ = spec2answ[1], spec3answ = spec2answ[2], spec4answ = spec2answ[3], spec5answ = spec2answ[4], spec6answ = spec2answ[5])
-        products2 = Products(store = "emag", pageused = obj, productname = product_name[2], imagepath = files1[2], content = content[2], spec1answ = spec3answ[0], spec2answ = spec3answ[1], spec3answ = spec3answ[2], spec4answ = spec3answ[3], spec5answ = spec3answ[4], spec6answ = spec3answ[5])
-        products3 = Products(store = "emag", pageused = obj, productname = product_name[3], imagepath = files1[3], content = content[3], spec1answ = spec4answ[0], spec2answ = spec4answ[1], spec3answ = spec4answ[2], spec4answ = spec4answ[3], spec5answ = spec4answ[4], spec6answ = spec4answ[5])
-        products4 = Products(store = "emag", pageused = obj, productname = product_name[4], imagepath = files1[4], content = content[4], spec1answ = spec5answ[0], spec2answ = spec5answ[1], spec3answ = spec5answ[2], spec4answ = spec5answ[3], spec5answ = spec5answ[4], spec6answ = spec5answ[5])
+        products = Products(id = id1[0], store = "emag", pageused = obj, productname = product_name[0], imagepath = files1[0], content = content[0], spec1answ = spec1answ[0], spec2answ = spec1answ[1], spec3answ = spec1answ[2], spec4answ = spec1answ[3], spec5answ = spec1answ[4], spec6answ = spec1answ[5])
+        products1 = Products(id = id1[1], store = "emag", pageused = obj, productname = product_name[1], imagepath = files1[1], content = content[1], spec1answ = spec2answ[0], spec2answ = spec2answ[1], spec3answ = spec2answ[2], spec4answ = spec2answ[3], spec5answ = spec2answ[4], spec6answ = spec2answ[5])
+        products2 = Products(id = id1[2], store = "emag", pageused = obj, productname = product_name[2], imagepath = files1[2], content = content[2], spec1answ = spec3answ[0], spec2answ = spec3answ[1], spec3answ = spec3answ[2], spec4answ = spec3answ[3], spec5answ = spec3answ[4], spec6answ = spec3answ[5])
+        products3 = Products(id = id1[3], store = "emag", pageused = obj, productname = product_name[3], imagepath = files1[3], content = content[3], spec1answ = spec4answ[0], spec2answ = spec4answ[1], spec3answ = spec4answ[2], spec4answ = spec4answ[3], spec5answ = spec4answ[4], spec6answ = spec4answ[5])
+        products4 = Products(id = id1[4], store = "emag", pageused = obj, productname = product_name[4], imagepath = files1[4], content = content[4], spec1answ = spec5answ[0], spec2answ = spec5answ[1], spec3answ = spec5answ[2], spec4answ = spec5answ[3], spec5answ = spec5answ[4], spec6answ = spec5answ[5])
         products_list = [products, products1, products2, products3, products4]
-        db.session.add(products)
-        db.session.add(products1)
-        db.session.add(products2)
-        db.session.add(products3)
-        db.session.add(products4)
-        db.session.commit()
+        sessiondb.add(products)
+        sessiondb.add(products1)
+        sessiondb.add(products2)
+        sessiondb.add(products3)
+        sessiondb.add(products4)
+        sessiondb.commit()
         return render_template("statii.html", statia = post_new, productslist = products_list)
 
 @app.route("/adminproduct", methods = ["GET", "POST"])
@@ -217,12 +224,12 @@ def product():
                             exist.st = new_product.st
                             exist.levsale = None
                             exist.stsale = None
-                        db.session.commit()
+                        sessiondb.commit()
 
                 else:
                     print("2")
-                    db.session.add(new_product)
-                    db.session.commit()
+                    sessiondb.add(new_product)
+                    sessiondb.commit()
 
 
         if storename == "technopolis":
@@ -235,7 +242,8 @@ def product():
                 st1 = str(product.find('sup').text)
 
                 new_product = Productstore(category = '', store = "technopolis", productname = productname1, lev = price, st = st1)
-                exist = Productstore.query.filter_by(productname = new_product.productname).first()
+                #exist = Productstore.query.filter_by(productname = new_product.productname).first()
+                exist = sessiondb.query(Productstore).filter_by(productname = new_product.productname).first()
                 nochange = 0
                 if exist:
                     if exist.lev == new_product.lev:
@@ -250,16 +258,17 @@ def product():
                             exist.st = new_product.st
                             exist.levsale = None
                             exist.stsale = None
-                        db.session.commit()
+                        sessiondb.commit()
 
                 else:
                     print("2")
-                    db.session.add(new_product)
-                    db.session.commit()
+                    sessiondb.add(new_product)
+                    sessiondb.commit()
 
         #print(existing)
         #print(len(existing))
-        all = Productstore.query.all()
+        #all = Productstore.query.all()
+        all = sessiondb.query(Productstore).all()
         return redirect("/adminnspecpro")
         #return render_template("products.html", products1 = all, length = len(existing))
 
@@ -268,21 +277,23 @@ def product():
 @login_required
 def prodspec():
     if request.method == "GET": 
-        res = Productstore.query.all()
+        #res = Productstore.query.all()
+        res = sessiondb.query(Productstore).all()
         return render_template("productspec.html", products1 = res)
 
 @app.route("/adminnspecpro<id>", methods = ["GET", "POST"])
 @login_required
 def prodspec1(id):
     if request.method == "GET":
-        product = Productstore.query.filter_by(id = id).first()
+        #product = Productstore.query.filter_by(id = id).first()
+        product = sessiondb.query(Productstore).filter_by(id = id).first()
         return render_template("admaddprodspec.html", product = product)
 
     if request.method == "POST":
         new = Productstorespec()
         files1 = []
-        res = db.session.query(Productstore).filter_by(id = id).first()
-        res1 = Productstore.query.filter_by(id = id).first()
+        res = sessiondb.query(Productstore).filter_by(id = id).first()
+        #res1 = Productstore.query.filter_by(id = id).first()
         files = [request.files['file1'], request.files['file2'], request.files['file3'], request.files['file4'], request.files['file5'], request.files['file6'], request.files['file7'], request.files['mainimage']]
         for file in files:
             if file.filename != '' and allowed_file(file.filename):
@@ -294,9 +305,9 @@ def prodspec1(id):
             else:
                 files1.append('')
 
-        if request.form.get('category') != '' : res1.category = request.form.get('category')
-        if files1[7] != '': res1.imagesrc = files1[7]
-        db.session.commit()
+        if request.form.get('category') != '' : res.category = request.form.get('category')
+        if files1[7] != '': res.imagesrc = files1[7]
+        sessiondb.commit()
         if files1[0] != '':
             new.imagepath1 = files1[0]
         if files1[1] != '':
@@ -346,8 +357,8 @@ def prodspec1(id):
         if request.form.get("opisanie") != '': new.opisanie = request.form.get("opisanie")
         new.main = res.id
         
-        db.session.add(new)
-        db.session.commit()
+        sessiondb.add(new)
+        sessiondb.commit()
         return redirect("/adminnspecpro")
 
 
@@ -355,7 +366,7 @@ def prodspec1(id):
 @login_required
 def statii():
     if request.method == "GET":
-        all_statii = db.session.query(Post).all()
+        all_statii = sessiondb.query(Post).all()
         #print(all_statii)
         return render_template("vsichkistatii.html", statii = all_statii)
 
@@ -364,10 +375,10 @@ def statii():
 @login_required
 def statii1(slug):
     if request.method == "GET":
-        statia = db.session.query(Post).filter_by(slug = slug).first()
+        statia = sessiondb.query(Post).filter_by(slug = slug).first()
         return render_template("adminstatia.html", statia = statia)
     if request.method == "POST":
-        statia = db.session.query(Post).filter_by(slug = slug).first()
+        statia = sessiondb.query(Post).filter_by(slug = slug).first()
 
         file = request.files['file']
         file1 = request.files['file1']
