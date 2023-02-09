@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="./static/product.css">
+
+{% endblock %}
+{% block main %}
+<div class="wrapper">
+    <div class="images">
+        <div class="main-image main">
+            <img id="1" class="images" src="{{product.imagesrc}}">
+        </div>
+        <div class="secondary-image">
+            <div style="border-color: rgb(47, 47, 162);" class="secondary-image-child"><img class="images secondary"
+                    src="{{product.imagesrc}}"></div>
+            <div class="secondary-image-child"><img class="images secondary" src="{{specification.imagepath1}}"></div>
+            <div class="secondary-image-child"><img class="images secondary" src="{{specification.imagepath2}}"></div>
+            <div class="secondary-image-child">
+                {% if specification.imagepath3 != '' and specification.imagepath3 is not none %}
+                <img class="images secondary" src="{{specification.imagepath3}}">
+                {% endif %}
+            </div>
+            {% if specification.imagepath4 != ''  and specification.imagepath4 is not none%}
+            <div class="more">
+                <button id="button" style="border:none; cursor: pointer;">
+                    <img class="images" id="arrow" src="./static/images/right-arrow.png">
+                </button>
+            </div>
+            {% endif %}
+            <div class="secondary-image-child">
+                {% if specification.imagepath4 != ''  and specification.imagepath4 is not none%}
+                <img class="images secondary" src="{{specification.imagepath4}}">
+                {% endif %}
+            </div>
+
+            <div class="secondary-image-child">
+                {% if specification.imagepath5 != ''  and specification.imagepath4 is not none%}
+                <img class="images secondary" src="{{specification.imagepath5}}">
+                {% endif %}
+            </div>
+            <div class="secondary-image-child">
+                {% if specification.imagepath6 != ''  and specification.imagepath4 is not none%}
+                <img class="images secondary" src="{{specification.imagepath6}}">
+                {% endif %}
+            </div>
+            <div class="secondary-image-child">
+                {% if specification.imagepath7 != ''  and specification.imagepath4 is not none%}
+                <img class="images secondary" src="{{specification.imagepath7}}">
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+    <div class="prices">
+        <div class="title">{{product.productname}}</div>
+        {% if specification.link1 != '' and specification.link1 is not none %}
+        <div class="price">
+            <img class="price-image" src="./static/uploads/Logo_Color.png">
+            <div class="price-button sale">
+                <div class="price-text-cena">Цена</div>
+                    <div class="price-old new product">
+                    <div class="price-old-lev black product-lev">
+                        9999
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black product-st-text">
+                            .99
+                        </div>
+                        <div class="price-old-lv-text new-st product-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if specification.link2 != '' and specification.link2 is not none %}
+        <div class="price">
+            <img class="price-image" src="./static/uploads/Technopolis_logo.png">
+            <div class="price-button">
+                <div class="price-text-cena">Цена</div>
+                    <div class="price-old new product">
+                    <div class="price-old-lev black product-lev">
+                        9999
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black product-st-text">
+                            .99
+                        </div>
+                        <div class="price-old-lv-text new-st product-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="price"></div>
+        <div class="price"></div>
+    </div>
+</div>
+<script type="text/javascript" src="./static/image-adjust.js"></script>
+<script type="text/javascript" src="./static/slider-images.js"></script>
+{% endblock %}

@@ -1,17 +1,25 @@
 from flask import Blueprint
 from flask import render_template
-from app import db, Post, Products, Productstore, Productstorespec
+from sqlalchemy.orm import sessionmaker
+from app import engine, Post, Products, Productstore, Productstorespec
 
 products = Blueprint('products', __name__, template_folder= 'templates', static_folder='static')
 
 @products.route('/')
 def index():
-    smartphones = Productstore.query.filter_by(category = "smartphone").all()
-    #all = Productstore.query.all()
-    #all1 = db.session.query(Productstore).filer_by(Pro)all()
-    print(all)
-    for i in smartphones:
-        print(str(i.category))
-        #if i.category !='':
-            #print(i.category)
+    print("1")
+    Session = sessionmaker(bind=engine)
+    sessiondb = Session()
+    smartphones = sessiondb.query(Productstore).filter_by(category = "smartphone").all()
+
+    sessiondb.close()
+    
     return render_template("productsall.html", smartphones = smartphones)
+
+@products.route('/<id>')
+def product(id):
+    Session = sessionmaker(bind=engine)
+    sessiondb = Session()
+    product = sessiondb.query(Productstore).filter_by(id = id).first()
+    specification = sessiondb.query(Productstorespec).filter_by(main = id).first()
+    return render_template("product.html", product = product, specification = specification)

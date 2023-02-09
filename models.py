@@ -6,6 +6,7 @@ Base = declarative_base()
 class Post(Base):
     __tablename__ = 'post'
 
+    intro = db.Column(db.String)
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String)
     category = db.Column(db.String)
@@ -81,6 +82,12 @@ class Productstorespec (Base):
     link3 = db.Column(db.String)
     link4 = db.Column(db.String)
     link5 = db.Column(db.String)
+    price1 = db.Column(db.String)
+    price2 = db.Column(db.String)
+    price3 = db.Column(db.String)
+    price4 = db.Column(db.String)
+    price5 = db.Column(db.String)
+    
     spec1 = db.Column(db.String)
     spec2 = db.Column(db.String)
     spec3 = db.Column(db.String)

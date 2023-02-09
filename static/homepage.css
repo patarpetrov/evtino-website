@@ -21,6 +21,10 @@ body {
     margin: 0;
     background-color: #D1D1FF;
 }
+a{
+    text-decoration:none;
+    color: white;
+}
 .nav-menu {
     align-items: flex-start;
     background-color: #2F2FA2;

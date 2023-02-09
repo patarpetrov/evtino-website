@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from sqlalchemy import ForeignKey, create_engine
+from sqlalchemy import ForeignKey, create_engine, MetaData
 from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import sessionmaker
 from bs4 import BeautifulSoup
@@ -35,12 +35,11 @@ Session(app)
 db = SQLAlchemy(app)
 from models import *
 Base.metadata.create_all(engine)
-Session = sessionmaker(bind=engine)
-sessiondb = Session()
-
+base = declarative_base()
+#Post.__table__.drop(engine)
 with app.app_context():
-    #Productstore.__table__.drop(db.engine)
-    db.create_all()
+    #db.create_all()
+    pass
 
 BUCKET_NAME = "evtino"
 #s3 = boto3.client("s3", aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID'), aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY'))
@@ -79,19 +78,7 @@ def index():
             data = json.load(f)
             print(type(data))
         return render_template("homepage1.html", dict1 = data)
-
-    #if request.method =="POST":
-        #email = request.form.get("buletina")
-        #with open("./static/emails.csv", "r", encoding="utf-8") as f:
-            #pass
-'''
-@app.route("/statii")
-def statii():
-    res = Post.query.first()
-    print(res)
-    return render_template("statii.html")'''
-
-
+    
 
 @app.route("/admin-login", methods=["GET", "POST"])
 def d():
@@ -115,7 +102,6 @@ def d():
 @login_required
 def din():
     if request.method == "GET":
-        print("da")
         return render_template("din.html")
         
 
@@ -125,6 +111,9 @@ def napishi():
     if request.method == "GET":
         return render_template("din-napishi.html")
     if request.method == "POST":
+        Session = sessionmaker(bind=engine)
+        sessiondb = Session()
+
         files1 =[]
         file = request.files['file']
         file1 = request.files['file1']
@@ -133,6 +122,7 @@ def napishi():
         file4 = request.files['file4']
         files = [file, file1, file2, file3, file4]
 
+        intro = request.form.get("intro")
         title = request.form.get("title")
         category = request.form.get("category")
         slug = request.form.get("slug")
@@ -151,8 +141,6 @@ def napishi():
             new_filename = ''
             if file.filename == '':
                 message = 'No image selected for uploading'
-                pass
-            #render_template("din-napishi.html", message = message)
         
             if file and allowed_file(file.filename):
                 new_filename =  save_file(file)
@@ -162,7 +150,7 @@ def napishi():
                 message = 'Allowed image types are - png, jpg, jpeg, gif'
                 #return render_template("din-napishi.html", message = message)
                 
-        post_new = Post(slug = slug, title = title, category = category, spec1 = specList[0], spec2 = specList[1], spec3 = specList[2], spec4 = specList[3], spec5 = specList[4], spec6 = specList[5])
+        post_new = Post(intro = intro, slug = slug, title = title, category = category, spec1 = specList[0], spec2 = specList[1], spec3 = specList[2], spec4 = specList[3], spec5 = specList[4], spec6 = specList[5])
         sessiondb.add(post_new)
         sessiondb.commit()
     
@@ -180,6 +168,7 @@ def napishi():
         sessiondb.add(products3)
         sessiondb.add(products4)
         sessiondb.commit()
+        sessiondb.close()
         return render_template("statii.html", statia = post_new, productslist = products_list)
 
 @app.route("/adminproduct", methods = ["GET", "POST"])
@@ -188,6 +177,9 @@ def product():
     if request.method == "GET":
         return render_template("adminproduct.html")
     if request.method == "POST":
+        Session = sessionmaker(bind=engine)
+        sessiondb = Session()
+
         link = request.form.get("link")
         storename = str(request.form.get("storename"))
         header = {
@@ -202,13 +194,16 @@ def product():
             products = soup.find_all('div', class_ = "card-item card-standard js-product-data")
             
             for product in products:
+                Session = sessionmaker(bind=engine)
+                sessiondb = Session()
                 productname1 = product.find('a', class_ = "card-v2-title semibold mrg-btm-xxs js-product-url").text.replace("  ", "")
                 image1 = product.find('img')["src"]
                 price = int(product.find('p', class_ = "product-new-price").text.replace(" лв", "").replace(".", "").replace(",", "").replace(".", "").replace("от ", ""))
                 st1 = f'{(price%100):02}'
 
                 new_product = Productstore(category = '', store = "emag", productname = productname1, imagesrc = image1, lev = price//100, st = st1)
-                exist = Productstore.query.filter_by(productname = new_product.productname).first()
+                #exist = Productstore.query.filter_by(productname = new_product.productname).first()
+                exist = sessiondb.query(Productstore).filter_by(productname = new_product.productname).first()
                 print(new_product.productname)
                 nochange = 0
                 if exist:
@@ -269,6 +264,7 @@ def product():
         #print(len(existing))
         #all = Productstore.query.all()
         all = sessiondb.query(Productstore).all()
+        sessiondb.close()
         return redirect("/adminnspecpro")
         #return render_template("products.html", products1 = all, length = len(existing))
 
@@ -277,22 +273,35 @@ def product():
 @login_required
 def prodspec():
     if request.method == "GET": 
-        #res = Productstore.query.all()
+        Session = sessionmaker(bind=engine)
+        sessiondb = Session()
+
         res = sessiondb.query(Productstore).all()
+        sessiondb.close()
         return render_template("productspec.html", products1 = res)
 
 @app.route("/adminnspecpro<id>", methods = ["GET", "POST"])
 @login_required
 def prodspec1(id):
     if request.method == "GET":
-        #product = Productstore.query.filter_by(id = id).first()
+        Session = sessionmaker(bind=engine)
+        sessiondb = Session()
+
         product = sessiondb.query(Productstore).filter_by(id = id).first()
+        sessiondb.close()
         return render_template("admaddprodspec.html", product = product)
 
     if request.method == "POST":
-        new = Productstorespec()
+        Session = sessionmaker(bind=engine)
+        sessiondb = Session()
+
+        #new = Productstorespec()
         files1 = []
         res = sessiondb.query(Productstore).filter_by(id = id).first()
+        new = sessiondb.query(Productstorespec).filter_by(main = res.id).first()
+        if not new:
+            print("new")
+            new = Productstorespec()
         #res1 = Productstore.query.filter_by(id = id).first()
         files = [request.files['file1'], request.files['file2'], request.files['file3'], request.files['file4'], request.files['file5'], request.files['file6'], request.files['file7'], request.files['mainimage']]
         for file in files:
@@ -314,13 +323,13 @@ def prodspec1(id):
             new.imagepath2 = files1[1]
         if files1[2] != '':
             new.imagepath3 = files1[2]
-        if files1[0] != '':
+        if files1[3] != '':
             new.imagepath4 = files1[3]
-        if files1[0] != '':
+        if files1[4] != '':
             new.imagepath5 = files1[4]
-        if files1[0] != '':
+        if files1[5] != '':
             new.imagepath6 = files1[5]
-        if files1[0] != '':
+        if files1[6] != '':
             new.imagepath7 = files1[6]
         if request.form.get('link1') != '':
             new.link1 = request.form.get("link1")
@@ -356,9 +365,9 @@ def prodspec1(id):
 
         if request.form.get("opisanie") != '': new.opisanie = request.form.get("opisanie")
         new.main = res.id
-        
         sessiondb.add(new)
         sessiondb.commit()
+        sessiondb.close()
         return redirect("/adminnspecpro")
 
 
@@ -366,8 +375,11 @@ def prodspec1(id):
 @login_required
 def statii():
     if request.method == "GET":
+        Session = sessionmaker(bind=engine)
+        sessiondb = Session()
+
         all_statii = sessiondb.query(Post).all()
-        #print(all_statii)
+        sessiondb.close()
         return render_template("vsichkistatii.html", statii = all_statii)
 
 
@@ -375,9 +387,15 @@ def statii():
 @login_required
 def statii1(slug):
     if request.method == "GET":
+        Session = sessionmaker(bind=engine)
+        sessiondb = Session()
+
         statia = sessiondb.query(Post).filter_by(slug = slug).first()
+        sessiondb.close()
         return render_template("adminstatia.html", statia = statia)
     if request.method == "POST":
+        Session = sessionmaker(bind=engine)
+        sessiondb = Session()
         statia = sessiondb.query(Post).filter_by(slug = slug).first()
 
         file = request.files['file']
@@ -390,6 +408,7 @@ def statii1(slug):
         title = request.form.get("title")
         category = request.form.get("category")
         slug = request.form.get("slug")
+        intro = request.form.get('intro')
 
         specList = [request.form.get("spec1"), request.form.get("spec2"), request.form.get("spec3"), request.form.get("spec4"), request.form.get("spec5"), request.form.get("spec6")]
         product_name=[request.form.get("productname"), request.form.get("productname1"), request.form.get("productname2"), request.form.get("productname3"), request.form.get("productname4")]
@@ -400,13 +419,60 @@ def statii1(slug):
         spec4answ = [request.form.get("4spec1answ"), request.form.get("4spec2answ"), request.form.get("4spec3answ"), request.form.get("4spec4answ"), request.form.get("4spec5answ"), request.form.get("4spec6answ")]
         spec5answ = [request.form.get("5spec1answ"), request.form.get("5spec2answ"), request.form.get("5spec3answ"), request.form.get("5spec4answ"), request.form.get("5spec5answ"), request.form.get("5spec6answ")]
 
+        if category != '': statia.category = category
+        if title != '': statia.title = title
+
+        if specList[0] != '': statia.spec1 = specList[0]
+        if specList[1] != '': statia.spec2 = specList[1]
+        if specList[2] != '': statia.spec3 = specList[2]
+        if specList[3] != '': statia.spec4 = specList[3]
+        if specList[4] != '': statia.spec5 = specList[4]
+        if specList[5] != '': statia.spec6 = specList[5]
+
+        if spec1answ[0] != '': statia.products[0].spec1answ = spec1answ[0]
+        if spec1answ[1] != '': statia.products[0].spec2answ = spec1answ[1]
+        if spec1answ[2] != '': statia.products[0].spec3answ = spec1answ[2]
+        if spec1answ[3] != '': statia.products[0].spec4answ = spec1answ[3]
+        if spec1answ[4] != '': statia.products[0].spec5answ = spec1answ[4]
+        if spec1answ[5] != '': statia.products[0].spec6answ = spec1answ[5]
+
+        if spec2answ[0] != '': statia.products[1].spec1answ = spec2answ[0]
+        if spec2answ[1] != '': statia.products[1].spec2answ = spec2answ[1]
+        if spec2answ[2] != '': statia.products[1].spec3answ = spec2answ[2]
+        if spec2answ[3] != '': statia.products[1].spec4answ = spec2answ[3]
+        if spec2answ[4] != '': statia.products[1].spec5answ = spec2answ[4]
+        if spec2answ[5] != '': statia.products[1].spec6answ = spec2answ[5]
+
+        if spec3answ[0] != '': statia.products[2].spec1answ = spec3answ[0]
+        if spec3answ[1] != '': statia.products[2].spec2answ = spec3answ[1]
+        if spec3answ[2] != '': statia.products[2].spec3answ = spec3answ[2]
+        if spec3answ[3] != '': statia.products[2].spec4answ = spec3answ[3]
+        if spec3answ[4] != '': statia.products[2].spec5answ = spec3answ[4]
+        if spec3answ[5] != '': statia.products[2].spec6answ = spec3answ[5]
+
+        if spec4answ[0] != '': statia.products[3].spec1answ = spec4answ[0]
+        if spec4answ[1] != '': statia.products[3].spec2answ = spec4answ[1]
+        if spec4answ[2] != '': statia.products[3].spec3answ = spec4answ[2]
+        if spec4answ[3] != '': statia.products[3].spec4answ = spec4answ[3]
+        if spec4answ[4] != '': statia.products[3].spec5answ = spec4answ[4]
+        if spec4answ[5] != '': statia.products[3].spec6answ = spec4answ[5]
+
+        if spec5answ[0] != '': statia.products[4].spec1answ = spec5answ[0]
+        if spec5answ[1] != '': statia.products[4].spec2answ = spec5answ[1]
+        if spec5answ[2] != '': statia.products[4].spec3answ = spec5answ[2]
+        if spec5answ[3] != '': statia.products[4].spec4answ = spec5answ[3]
+        if spec5answ[4] != '': statia.products[4].spec5answ = spec5answ[4]
+        if spec5answ[5] != '': statia.products[4].spec6answ = spec5answ[5]
+
+        if intro != '': statia.intro = intro
+
+
         for i in range(5):
-            if specList[i] != '': statia.spec1
-            if specList[i] != '': statia.spec1
-            if specList[i] != '': statia.spec1
-            if specList[i] != '': statia.spec1
-            if specList[i] != '': statia.spec1
-            if specList[i] != '': statia.spec1
+            if product_name[i] != '': statia.products[i] = product_name[i]
+            if content[i] != '': statia.products[i].content = content[i]
+
+        sessiondb.close()
+
 
 
 

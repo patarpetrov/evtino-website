@@ -3,84 +3,196 @@
 {% block head %}
 <link rel="stylesheet" href="./static/productsall.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-element-bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 {% endblock %}
 
 {% block main %}
-<div class= "category-background">
-    {% for product in smartphones %}
-    <div class="product-card swiper-slide">
-        <img class = "card-image" src="{{ product.imagesrc }}">
-        <div class = "content">
-            <div class="title-1">
-                <p class="title">{{product.productname}}</p>
+
+<div class="wrapper">
+    <div class="filters"></div>
+    <div class="every-product">
+        <div class="background">
+            <div class="productall-title title">
+                <div id="title1">Смарфони</div><button class="behind">behind</button>
+                <button class="behind">behind</button>
+
             </div>
-            <div class="price">
-                {% if product.levsale %}
-                <div class="price-old">
-                    <div class="price-old-lev">
-                        {{ product.lev }}
-                    </div>
-                    <div class="old-st-text">
-                        <div class="price-old-st">
-                            {{ product.st}}
+            <div class="category-background">
+
+                {% for smartphone in smartphones%}
+                <a href="/products/{{smartphone.id}}">
+                <div class="product-card productall 1">
+                    <img class="card-image" src="{{ smartphone.imagesrc }}">
+                    <div class="content">
+                        <div class="title-1">
+                            <p class="title">{{ smartphone.productname}}</p>
                         </div>
-                        <div class="price-old-lv-text">
-                            лв
+                        <div class="price">
+                            {% if smartphone.levsale %}
+                            <div class="price-old">
+                                <div class="price-old-lev">
+                                    {{ smartphone.lev }}
+                                </div>
+                                <div class="old-st-text">
+                                    <div class="price-old-st">
+                                        {{ smartphone.st}}
+                                    </div>
+                                    <div class="price-old-lv-text">
+                                        лв
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="price-old new">
+                                <div class="price-old-lev black">
+                                    {{ smartphone.levsale }}
+                                </div>
+                                <div class="old-st-text">
+                                    <div class="price-old-st black">
+                                        {{ smartphone.stsale }}
+                                    </div>
+                                    <div class="price-old-lv-text new-st">
+                                        лв
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="price-old new">
+                                <div class="price-old-lev black">
+                                    {{ smartphone.lev }}
+                                </div>
+                                <div class="old-st-text">
+                                    <div class="price-old-st black">
+                                        {{ smartphone.st}}
+                                    </div>
+                                    <div class="price-old-lv-text new-st">
+                                        лв
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="price-old new">
+                                <div class="price-old-lev black">
+
+                                </div>
+                                <div class="old-st-text">
+                                    <div class="price-old-st black">
+
+                                    </div>
+                                    <div class="price-old-lv-text new-st">
+
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="enter">
+                                <img style="width: 18%;height:75%;float: right;margin-top: 5px;margin-right: 10px; "
+                                    src="/static/images/arrow-right.png">
+                            </div>
                         </div>
+                        {% if smartphone.store == "emag" %}
+                        <div class="logo">
+                            <img style="margin-left: 37.5%; height: 60%; width: 25%; margin-top: 5%;"
+                                src="/static/images/emag.png">
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="price-old new">
-                    <div class="price-old-lev black">
-                        {{ product.levsale }}
-                    </div>
-                    <div class="old-st-text">
-                        <div class="price-old-st black">
-                            {{ product.stsale }}
-                        </div>
-                        <div class="price-old-lv-text new-st">
-                            лв
-                        </div>
-                    </div>
-                </div>
-                {% else %}
-                <div class="price-old new">
-                    <div class="price-old-lev black">
-                        {{ product.lev }}
-                    </div>
-                    <div class="old-st-text">
-                        <div class="price-old-st black">
-                            {{ product.st}}
-                        </div>
-                        <div class="price-old-lv-text new-st">
-                            лв
-                        </div>
-                    </div>
-                </div>
-                <div class="price-old new">
-                    <div class="price-old-lev black">
-                        
-                    </div>
-                    <div class="old-st-text">
-                        <div class="price-old-st black">
-                            
-                        </div>
-                        <div class="price-old-lv-text new-st">
-                           
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-                <div class="enter">
-                    <img style="width: 18%;height:75%;float: right;margin-top: 5px;margin-right: 10px; "src="/static/images/arrow-right.png">
-                </div>
+            </a>
+                {% endfor %}
             </div>
-            {% if product.store == "emag" %}
-            <div class="logo">
-                <img style="margin-left: 37.5%; height: 60%; width: 25%; margin-top: 5%;" src="/static/images/emag.png">
+            
+            <div class="productall-title title margin">
+                <div id="title1">Смарфони</div><button class="behind">behind</button>
+                <button class="behind">behind</button>
+
             </div>
-            {% endif %}
+            <div class="category-background">
+
+                {% for smartphone in smartphones%}
+                <a href="/products/{{smartphone.id}}">
+                <div class="product-card productall 2">
+                    <img class="card-image" src="{{ smartphone.imagesrc }}">
+                    <div class="content">
+                        <div class="title-1">
+                            <p class="title">{{ smartphone.productname}}</p>
+                        </div>
+                        <div class="price">
+                            {% if smartphone.levsale %}
+                            <div class="price-old">
+                                <div class="price-old-lev">
+                                    {{ smartphone.lev }}
+                                </div>
+                                <div class="old-st-text">
+                                    <div class="price-old-st">
+                                        {{ smartphone.st}}
+                                    </div>
+                                    <div class="price-old-lv-text">
+                                        лв
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="price-old new">
+                                <div class="price-old-lev black">
+                                    {{ smartphone.levsale }}
+                                </div>
+                                <div class="old-st-text">
+                                    <div class="price-old-st black">
+                                        {{ smartphone.stsale }}
+                                    </div>
+                                    <div class="price-old-lv-text new-st">
+                                        лв
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="price-old new">
+                                <div class="price-old-lev black">
+                                    {{ smartphone.lev }}
+                                </div>
+                                <div class="old-st-text">
+                                    <div class="price-old-st black">
+                                        {{ smartphone.st}}
+                                    </div>
+                                    <div class="price-old-lv-text new-st">
+                                        лв
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="price-old new">
+                                <div class="price-old-lev black">
+
+                                </div>
+                                <div class="old-st-text">
+                                    <div class="price-old-st black">
+
+                                    </div>
+                                    <div class="price-old-lv-text new-st">
+
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="enter">
+                                <img style="width: 18%;height:75%;float: right;margin-top: 5px;margin-right: 10px; "
+                                    src="/static/images/arrow-right.png">
+                            </div>
+                        </div>
+                        {% if smartphone.store == "emag" %}
+                        <div class="logo">
+                            <img style="margin-left: 37.5%; height: 60%; width: 25%; margin-top: 5%;"
+                                src="/static/images/emag.png">
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+                {% endfor %}
+            </div>
+
         </div>
     </div>
-    {% endfor %}
+
 </div>
+
+</div>
+<script type="text/javascript" src="./static/slider.js"></script>
 {%endblock%}
