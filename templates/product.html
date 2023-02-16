@@ -1,10 +1,12 @@
 {% extends "layout.html" %}
 {% block head %}
 <link rel="stylesheet" href="./static/product.css">
+<link rel="stylesheet" href="./static/productsall.css">
+
 
 {% endblock %}
 {% block main %}
-<div class="wrapper">
+<div class="wrapper-product">
     <div class="images">
         <div class="main-image main">
             <img id="1" class="images" src="{{product.imagesrc}}">
@@ -51,19 +53,23 @@
         </div>
     </div>
     <div class="prices">
-        <div class="title">{{product.productname}}</div>
-        {% if specification.link1 != '' and specification.link1 is not none %}
-        <div class="price">
+        <div class="title-product">{{product.productname}}</div>
+        <div class="price-product">
+            {% if product.store == "emag" %}
             <img class="price-image" src="./static/uploads/Logo_Color.png">
+            {% endif%}
+            {% if product.store == "technopolis" %}
+            <img class="price-image" src="./static/uploads/Technopolis_logo.png">
+            {% endif%}
             <div class="price-button sale">
                 <div class="price-text-cena">Цена</div>
                     <div class="price-old new product">
                     <div class="price-old-lev black product-lev">
-                        9999
+                        {{ product.lev }}
                     </div>
                     <div class="old-st-text">
                         <div class="price-old-st black product-st-text">
-                            .99
+                            {{ product.st }}
                         </div>
                         <div class="price-old-lv-text new-st product-st">
                             лв
@@ -72,19 +78,23 @@
                 </div>
             </div>
         </div>
-        {% endif %}
-        {% if specification.link2 != '' and specification.link2 is not none %}
-        <div class="price">
-            <img class="price-image" src="./static/uploads/Technopolis_logo.png">
-            <div class="price-button">
-                <div class="price-text-cena">Цена</div>
+        {% if linkers[0] != '' and linkers[0] is not none %}
+        <div class="price sec">
+            {% if linkers[0].store == "emag" %}
+            <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
+            {% endif%}
+            {% if linkers[0].store == "technopolis" %}
+            <img class="price-image sec-image" src="./static/uploads/Technopolis_logo.png">
+            {% endif%}
+            <div class="price-button sale">
+                <div class="price-text-cena sec-price">Цена</div>
                     <div class="price-old new product">
                     <div class="price-old-lev black product-lev">
-                        9999
+                        {{ linkers[0].lev }}
                     </div>
                     <div class="old-st-text">
                         <div class="price-old-st black product-st-text">
-                            .99
+                            {{ linkers[0].st }}
                         </div>
                         <div class="price-old-lv-text new-st product-st">
                             лв
@@ -94,10 +104,255 @@
             </div>
         </div>
         {% endif %}
-        <div class="price"></div>
-        <div class="price"></div>
+        {% if linkers[1] != '' and linkers[1] is not none %}
+        <div class="price sec">
+            {% if linkers[1].store == "emag" %}
+            <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
+            {% endif%}
+            {% if linkers[1].store == "technopolis" %}
+            <img class="price-image sec-image" src="./static/uploads/Technopolis_logo.png">
+            {% endif%}
+            <div class="price-button sale">
+                <div class="price-text-cena sec-price">Цена</div>
+                    <div class="price-old new product">
+                    <div class="price-old-lev black product-lev">
+                        {{ linkers[1].lev }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black product-st-text">
+                            {{ linkers[1].st }}
+                        </div>
+                        <div class="price-old-lv-text new-st product-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if linkers[2] != '' and linkers[2] is not none %}
+        <div class="price sec">
+            {% if linkers[2].store == "emag" %}
+            <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
+            {% endif%}
+            {% if linkers[2].store == "technopolis" %}
+            <img class="price-image sec-image" src="./static/uploads/Technopolis_logo.png">
+            {% endif%}
+            <div class="price-button sale">
+                <div class="price-text-cena sec-price">Цена</div>
+                    <div class="price-old new product">
+                    <div class="price-old-lev black product-lev">
+                        {{ linkers[2].lev }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black product-st-text">
+                            {{ linkers[2].st }}
+                        </div>
+                        <div class="price-old-lv-text new-st product-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if linkers[3] != '' and linkers[3] is not none %}
+        <div class="price sec">
+            {% if linkers[3].store == "emag" %}
+            <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
+            {% endif%}
+            {% if linkers[3].store == "technopolis" %}
+            <img class="price-image sec-image" src="./static/uploads/Technopolis_logo.png">
+            {% endif%}
+            <div class="price-button sale">
+                <div class="price-text-cena sec-price">Цена</div>
+                    <div class="price-old new product">
+                    <div class="price-old-lev black product-lev">
+                        {{ linkers[3].lev }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black product-st-text">
+                            {{ linkers[3].st }}
+                        </div>
+                        <div class="price-old-lv-text new-st product-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if linkers[4] != '' and linkers[4] is not none %}
+        <div class="price sec">
+            {% if linkers[4].store == "emag" %}
+            <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
+            {% endif%}
+            {% if linkers[4].store == "technopolis" %}
+            <img class="price-image sec-image" src="./static/uploads/Technopolis_logo.png">
+            {% endif%}
+            <div class="price-button sale">
+                <div class="price-text-cena sec-price">Цена</div>
+                    <div class="price-old new product">
+                    <div class="price-old-lev black product-lev">
+                        {{ linkers[4].lev }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black product-st-text">
+                            {{ linkers[4].st }}
+                        </div>
+                        <div class="price-old-lv-text new-st product-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
-<script type="text/javascript" src="./static/image-adjust.js"></script>
-<script type="text/javascript" src="./static/slider-images.js"></script>
+<div class="specification-all">
+    <div class="wrapper-spec">
+        {% if specification.spec1 != None %}
+        <div class="spec">
+            <div class="spec-title">Резолюция</div>
+            <div class="spec-content">{{ specification.spec1 }}</div>
+        </div>
+        {% endif %}
+        {% if specification.spec2 != None %}
+        <div class="spec">
+            <div class="spec-title">Резолюция</div>
+            <div class="spec-content">{{ specification.spec2 }}</div>
+        </div>
+        {% endif %}
+        {% if specification.spec3 != None %}
+        <div class="spec">
+            <div class="spec-title">Резолюция</div>
+            <div class="spec-content">{{ specification.spec3 }}</div>
+        </div>
+        {% endif %}
+        {% if specification.spec4 != None %}
+        <div class="spec">
+            <div class="spec-title">Резолюция</div>
+            <div class="spec-content">{{ specification.spec4 }}</div>
+        </div>
+        {% endif %}
+        {% if specification.spec5 != None %}
+        <div class="spec">
+            <div class="spec-title">Резолюция</div>
+            <div class="spec-content">{{ specification.spec5 }}</div>
+        </div>
+        {% endif %}
+        {% if specification.spec6 != None %}
+        <div class="spec">
+            <div class="spec-title">Резолюция</div>
+            <div class="spec-content">{{ specification.spec6 }}</div>
+        </div>
+        {% endif %}
+        {% if specification.spec7 != None %}
+        <div class="spec">
+            <div class="spec-title">Резолюция</div>
+            <div class="spec-content">{{ specification.spec7 }}</div>
+        </div>
+        {% endif %}
+    </div>
+    {% if specification.opisanie != None and specification.opisanie != "" %}
+    <div class="spec opisanie-title spec-title">Описание
+        <div class="opisanie">
+            {{ specification.opisanie }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+</div>
+
+<div class="main-store">
+    <a style="margin-left:auto; margin-right:auto;" href="{{product.link}}">
+        <div class ="main-store-text">За повече информация за продукта посете сайта на продавата</div>
+    </a>
+</div>
+
+<div class="category-background-product">
+
+    {% for simprod in similar %}
+    <a href="/products/product-{{simprod.id}}">
+    <div class="product-card productall 1">
+        <img class="card-image" src="{{ simprod.imagesrc }}">
+        <div class="content">
+            <div class="title-1">
+                <p class="title">{{ simprod.productname}}</p>
+            </div>
+            <div class="price">
+                {% if simprod.levsale %}
+                <div class="price-old">
+                    <div class="price-old-lev">
+                        {{ simprod.lev }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st">
+                            {{ simprod.st}}
+                        </div>
+                        <div class="price-old-lv-text">
+                            лв
+                        </div>
+                    </div>
+                </div>
+                <div class="price-old new">
+                    <div class="price-old-lev black">
+                        {{ simprod.levsale }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black">
+                            {{ simprod.stsale }}
+                        </div>
+                        <div class="price-old-lv-text new-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="price-old new">
+                    <div class="price-old-lev black">
+                        {{ simprod.lev }}
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black">
+                            {{ simprod.st}}
+                        </div>
+                        <div class="price-old-lv-text new-st">
+                            лв
+                        </div>
+                    </div>
+                </div>
+                <div class="price-old new">
+                    <div class="price-old-lev black">
+
+                    </div>
+                    <div class="old-st-text">
+                        <div class="price-old-st black">
+
+                        </div>
+                        <div class="price-old-lv-text new-st">
+
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="enter">
+                    <img style="width: 18%;height:75%;float: right;margin-top: 5px;margin-right: 10px; "
+                        src="/static/images/arrow-right.png">
+                </div>
+            </div>
+            {% if simprod.store == "emag" %}
+            <div class="logo">
+                <img style="margin-left: 37.5%; height: 60%; width: 25%; margin-top: 5%;"
+                    src="/static/images/emag.png">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</a>
+{% endfor %}
+<script type="text/javascript" src="./static/scripts/image-adjust.js"></script>
+<script type="text/javascript" src="./static/scripts/image-slider.js"></script>
+<script type="text/javascript" src="./static/scripts/image-selector.js"></script>
 {% endblock %}

@@ -52,8 +52,8 @@ class Productstore (Base):
 
     id = db.Column(db.Integer, primary_key = True)
     productname = db.Column(db.String)
-    category = db.Column(db.String)
     store = db.Column(db.String)
+    link = db.Column(db.String)
     lev = db.Column(db.Integer)
     st = db.Column(db.String)
     imagesrc = db.Column(db.String)
@@ -76,17 +76,13 @@ class Productstorespec (Base):
     imagepath5 = db.Column(db.String)
     imagepath6 = db.Column(db.String)
     imagepath7 = db.Column(db.String)
-
-    link1 = db.Column(db.String) #emag
-    link2 = db.Column(db.String) #technopolis
-    link3 = db.Column(db.String)
-    link4 = db.Column(db.String)
-    link5 = db.Column(db.String)
-    price1 = db.Column(db.String)
-    price2 = db.Column(db.String)
-    price3 = db.Column(db.String)
-    price4 = db.Column(db.String)
-    price5 = db.Column(db.String)
+    category = db.Column(db.String) #emag
+    
+    linker1 = db.Column(db.Integer)
+    linker2 = db.Column(db.Integer)
+    linker3 = db.Column(db.Integer)
+    linker4 = db.Column(db.Integer)
+    linker5 = db.Column(db.Integer)
     
     spec1 = db.Column(db.String)
     spec2 = db.Column(db.String)

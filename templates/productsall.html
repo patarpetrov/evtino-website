@@ -7,9 +7,32 @@
 {% endblock %}
 
 {% block main %}
-
 <div class="wrapper">
-    <div class="filters"></div>
+    <div class="filters">
+        <div class="categorii">
+            <div class="title-categorii">Категории</div>
+            <a href="/products/?category=smartphone"><li class ="list">Смартфони</li></a>
+            <a href="/products/?category=tv"><li class ="list">Телевизори</li></a>
+            <a href="/products/?category=laptopo"><li class ="list">Лаптопи</li></a>
+            <a href="/products/?category=peralnq"><li class ="list">Смартфон</li></a>
+        </div>
+        <div class="categorii">
+            <div class="title-categorii">Модел</div>
+            <a href="{{ current_url }}&category=apple"><li class ="list">Apple</li></a>
+            <a href="{{ current_url }}&category=samsung"><li class ="list">Samsung</li></a>
+            <a href="{{ current_url }}&category=xiaomi"><li class ="list">Xiaomi</li></a>
+            <a href="{{ current_url }}&ategory=huawei"><li class ="list">Huawei</li></a>
+            <a href="{{ current_url }}&category=alcatel"><li class ="list">Alcatel</li></a>
+        </div>
+        <div class="categorii">
+            <div class="title-categorii">ram</div>
+            <a href="{{ current_url }}&ram=2"><li class ="list">Apple</li></a>
+            <a href="{{ current_url }}&ram=3"><li class ="list">Samsung</li></a>
+            <a href="{{ current_url }}&ram=4"><li class ="list">Xiaomi</li></a>
+            <a href="{{ current_url }}&ram=5"><li class ="list">Huawei</li></a>
+            <a href="{{ current_url }}&ram=6"><li class ="list">Alcatel</li></a>
+        </div>
+    </div>
     <div class="every-product">
         <div class="background">
             <div class="productall-title title">
@@ -20,7 +43,7 @@
             <div class="category-background">
 
                 {% for smartphone in smartphones%}
-                <a href="/products/{{smartphone.id}}">
+                <a href="/products/product-{{smartphone.id}}">
                 <div class="product-card productall 1">
                     <img class="card-image" src="{{ smartphone.imagesrc }}">
                     <div class="content">
@@ -105,6 +128,8 @@
                 <button class="behind">behind</button>
 
             </div>
+     
+       
             <div class="category-background">
 
                 {% for smartphone in smartphones%}
@@ -187,7 +212,6 @@
             </a>
                 {% endfor %}
             </div>
-
         </div>
     </div>
 

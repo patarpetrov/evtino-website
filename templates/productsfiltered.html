@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="./static/productsall.css">
+{% endblock %}
+
+{% block main %}
+<div class="wrapper">
+        <div class="filters">
+            <div class="categorii">
+                <div class="title-categorii">Категории</div>
+                <a href="/products/?category=smartphone"><li class ="list">Смартфони</li></a>
+                <a href="/products/?category=tv"><li class ="list">Телевизори</li></a>
+                <a href="/products/?category=laptopo"><li class ="list">Лаптопи</li></a>
+                <a href="/products/?category=peralnq"><li class ="list">Смартфон</li></a>
+            </div>
+            <div class="categorii">
+                <div class="title-categorii">Модел</div>
+                <a href="{{ current_url }}&category=apple"><li class ="list">Apple</li></a>
+                <a href="{{ current_url }}&category=samsung"><li class ="list">Samsung</li></a>
+                <a href="{{ current_url }}&category=xiaomi"><li class ="list">Xiaomi</li></a>
+                <a href="{{ current_url }}&ategory=huawei"><li class ="list">Huawei</li></a>
+                <a href="{{ current_url }}&category=alcatel"><li class ="list">Alcatel</li></a>
+            </div>
+            <div class="categorii">
+                <div class="title-categorii">ram</div>
+                <a href="{{ current_url }}&ram=2"><li class ="list">2</li></a>
+                <a href="{{ current_url }}&ram=3"><li class ="list">3</li></a>
+                <a href="{{ current_url }}&ram=4"><li class ="list">4</li></a>
+                <a href="{{ current_url }}&ram=5"><li class ="list">5</li></a>
+                <a href="{{ current_url }}&ram=6"><li class ="list">6</li></a>
+            </div>
+        </div>
+    <div id="flexbox-filtered">
+        {% for product in products1 %}
+        <a href="/products/product-{{product.id}}">
+            <div class="product-card filtered">
+                <img class="card-image images" src="{{ product.imagesrc }}">
+                <div class="content">
+                    <div class="title-1">
+                        <p class="title">{{product.productname}}</p>
+                    </div>
+                    <div class="price">
+                        {% if product.levsale %}
+                        <div class="price-old">
+                            <div class="price-old-lev">
+                                {{ product.lev }}
+                            </div>
+                            <div class="old-st-text">
+                                <div class="price-old-st">
+                                    {{ product.st}}
+                                </div>
+                                <div class="price-old-lv-text">
+                                    лв
+                                </div>
+                            </div>
+                        </div>
+                        <div class="price-old new">
+                            <div class="price-old-lev black">
+                                {{ product.levsale }}
+                            </div>
+                            <div class="old-st-text">
+                                <div class="price-old-st black">
+                                    {{ product.stsale }}
+                                </div>
+                                <div class="price-old-lv-text new-st">
+                                    лв
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="price-old new">
+                            <div class="price-old-lev black">
+                                {{ product.lev }}
+                            </div>
+                            <div class="old-st-text">
+                                <div class="price-old-st black">
+                                    {{ product.st}}
+                                </div>
+                                <div class="price-old-lv-text new-st">
+                                    лв
+                                </div>
+                            </div>
+                        </div>
+                        <div class="price-old new">
+                            <div class="price-old-lev black">
+
+                            </div>
+                            <div class="old-st-text">
+                                <div class="price-old-st black">
+
+                                </div>
+                                <div class="price-old-lv-text new-st">
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="enter">
+                            <img style="width: 18%;height:75%;float: right;margin-top: 5px;margin-right: 10px; "
+                                src="/static/images/arrow-right.png">
+                        </div>
+                    </div>
+                    {% if product.store == "emag" %}
+                    <div class="logo">
+                        <img style="margin-left: 37.5%; height: 60%; width: 25%; margin-top: 5%;"
+                            src="/static/images/emag.png">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+<script type="text/javascript" src="./static/scripts/image-adjust.js"></script>
+{% endblock%}

@@ -36,7 +36,9 @@ db = SQLAlchemy(app)
 from models import *
 Base.metadata.create_all(engine)
 base = declarative_base()
-#Post.__table__.drop(engine)
+#Productstorespec.__table__.drop(engine)
+#Productstore.__table__.drop(engine)
+
 with app.app_context():
     #db.create_all()
     pass
@@ -201,7 +203,7 @@ def product():
                 price = int(product.find('p', class_ = "product-new-price").text.replace(" лв", "").replace(".", "").replace(",", "").replace(".", "").replace("от ", ""))
                 st1 = f'{(price%100):02}'
 
-                new_product = Productstore(category = '', store = "emag", productname = productname1, imagesrc = image1, lev = price//100, st = st1)
+                new_product = Productstore(store = "emag", productname = productname1, imagesrc = image1, lev = price//100, st = st1)
                 #exist = Productstore.query.filter_by(productname = new_product.productname).first()
                 exist = sessiondb.query(Productstore).filter_by(productname = new_product.productname).first()
                 print(new_product.productname)
@@ -236,7 +238,7 @@ def product():
                 price = int(product.find('span', class_ = "product-box__price-value").text.replace(" лв", "").replace(".", "").replace(",", "").replace(".", "").replace(" ", ""))
                 st1 = str(product.find('sup').text)
 
-                new_product = Productstore(category = '', store = "technopolis", productname = productname1, lev = price, st = st1)
+                new_product = Productstore(store = "technopolis", productname = productname1, lev = price, st = st1)
                 #exist = Productstore.query.filter_by(productname = new_product.productname).first()
                 exist = sessiondb.query(Productstore).filter_by(productname = new_product.productname).first()
                 nochange = 0
@@ -314,7 +316,7 @@ def prodspec1(id):
             else:
                 files1.append('')
 
-        if request.form.get('category') != '' : res.category = request.form.get('category')
+        if request.form.get('category') != '' : new.category = request.form.get('category')
         if files1[7] != '': res.imagesrc = files1[7]
         sessiondb.commit()
         if files1[0] != '':
@@ -331,16 +333,18 @@ def prodspec1(id):
             new.imagepath6 = files1[5]
         if files1[6] != '':
             new.imagepath7 = files1[6]
-        if request.form.get('link1') != '':
-            new.link1 = request.form.get("link1")
-        if request.form.get('link2') != '':
-            new.link2 = request.form.get("link2")
-        if request.form.get('link3') != '':
-            new.link3 = request.form.get("link3")
-        if request.form.get('link4') != '':
-            new.link4 = request.form.get("link4")
-        if request.form.get('link5') != '':
-            new.link5 = request.form.get("link5")
+        if request.form.get('link') != '':
+            res.link = request.form.get("link")
+        if request.form.get('linker1') != '':
+            new.linker1 = request.form.get("linker1")
+        if request.form.get('linker2') != '':
+            new.linker2 = request.form.get("linker2")
+        if request.form.get('linker3') != '':
+            new.linker3 = request.form.get("linker3")
+        if request.form.get('linker4') != '':
+            new.linker4 = request.form.get("linker4")
+        if request.form.get('linker5') != '':
+            new.linker5 = request.form.get("linker5")
 
         if request.form.get("spec1") != '': new.spec1 = request.form.get("spec1")
         if request.form.get("spec2") != '': new.spec2 = request.form.get("spec2")

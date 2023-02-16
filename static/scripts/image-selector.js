@@ -1,14 +1,3 @@
-let img = document.getElementsByClassName('images');
-for(const i of img){
-    if (i.naturalWidth >= i.naturalHeight){
-        i.style.width = '95%';
-        i.style.height = 'fit-content';
-    }
-    if (i.naturalWidth < i.naturalHeight){
-        i.style.height = '95%';
-        i.style.width = 'fit-content';
-    }
-}
 var rot = 180;
 var content = document.getElementById("arrow");
 var btn = document.getElementById("button");
@@ -41,37 +30,7 @@ function selectedImages(old, k, i) {
     return;
 }
 };
-/*
-let n = 1
-console.log(Array.from(imgBackground))
-Array.from(imgBackground).forEach((item) => {
-    item.addEventListener('click', function() {
-        console.log("click detected");
-        let k = n + 1;
-        
-        console.log(k);
-        if (img[k]){
-        old.style.borderColor   = '#F1F1FF';
-        old = item;
-        item.style.borderColor  = '#2F2FA2';
-        img[1].src = img[k].src;
-        img[1].style.width = img[k].style.width;
-        img[1].style.height = img[k].style.height;
-        return;
-    }});
-});
-/*
-imgBackground[1].addEventListener('click', selectedImages(old, k, item));
-imgBackground[1].addEventListener('click', selectedImages(old, k, item));
-imgBackground[1].addEventListener('click', selectedImages(old, k, item));*/
-    /*
-    i.addEventListener("click", function(){
-        old.style.borderColor   = '#F1F1FF';
-        old = i;
-        i.style.borderColor  = '#2F2FA2';
-        k = k + 1;
-        changeMainImage(img[1], img[k]); });
-}*/
+
 imagBackround[0].addEventListener("click", function(){
     if (img[2]){
     old.style.borderColor   = '#F1F1FF';

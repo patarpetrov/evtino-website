@@ -152,9 +152,12 @@ a{
     height: 450px;
     width: 250px;
 }
+.filtered{
+    width:245px;
+}
 .card-image {
-    width: 95%;
-    height: 90%;
+    
+    max-width:90%;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
@@ -182,6 +185,7 @@ a{
 .price-old-lev{
     text-align: center;
     width: fit-content;
+    max-width:65px;
     color: rgb(115,115,115);
     font-family: var(--font-family-inter);
     font-weight: 400;
@@ -211,6 +215,7 @@ a{
     font-style: normal;
     font-size: 14px;
     margin-top: 2px;
+    margin-left:3px;
 }
 .price-old-lv-text{
     height: 100%;
@@ -522,6 +527,13 @@ a{
     margin-right: 5%;
     width:90%;
     margin-top: 5%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:5px;
+}
+#flexbox-filtered{
+    
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
