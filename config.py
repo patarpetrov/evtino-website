@@ -11,4 +11,4 @@ class Config:
     SESSION_PERMANENT = False
     SESSION_TYPE = "filesystem"
     UPLOAD_FOLDER = UPLOAD_FOLDER_DIR
-    SECRET_KEY = "malkiamesi"
+    SECRET_KEY = "fhaoufgds"

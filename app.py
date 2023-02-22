@@ -11,20 +11,18 @@ from bs4 import BeautifulSoup
 import requests
 import boto3
 import uuid
-
-
-from config import Config
-url = 'postgresql://evtino_user:7Gn99jhwihLA8EVcNIZCdI1fZhIt7IqG@dpg-cfcis3en6mpierpgf3h0-a.frankfurt-postgres.render.com/evtino'
-engine = create_engine('postgresql://evtino_user:7Gn99jhwihLA8EVcNIZCdI1fZhIt7IqG@dpg-cfcis3en6mpierpgf3h0-a.frankfurt-postgres.render.com/evtino')
-conn = engine.connect()
-
-
 import json
 import urllib.request
 import os
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
+
+
+from config import Config
+#url = 'postgresql://evtino_user:7Gn99jhwihLA8EVcNIZCdI1fZhIt7IqG@dpg-cfcis3en6mpierpgf3h0-a.frankfurt-postgres.render.com/evtino'
+engine = create_engine(os.getenv("DATABASE_URI"))
+conn = engine.connect()
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -90,6 +88,7 @@ def index():
         with open("./static/top5.json", "r", encoding="utf-8") as f:
             data = json.load(f)
             print(type(data))
+        sessiondb.close()
         return render_template("homepage.html", dict1 = data, postsall= postsall)
     
 
@@ -310,6 +309,7 @@ def prodspec1(id):
     if request.method == "POST":
         Session = sessionmaker(bind=engine)
         sessiondb = Session()
+    
 
         #new = Productstorespec()
         files1 = []
