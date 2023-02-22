@@ -20,7 +20,7 @@ from functools import wraps
 
 
 from config import Config
-#url = 'postgresql://evtino_user:7Gn99jhwihLA8EVcNIZCdI1fZhIt7IqG@dpg-cfcis3en6mpierpgf3h0-a.frankfurt-postgres.render.com/evtino'
+
 engine = create_engine(os.getenv("DATABASE_URI"))
 conn = engine.connect()
 
