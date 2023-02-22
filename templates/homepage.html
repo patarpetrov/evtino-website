@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<head>
-    <link rel="stylesheet" href="./static/homepage.css">
+{% extends "layout.html "%}
+{% block head %}
 
-</head>
-<body>
-    <div class="nav-menu">
-        <img class="image-1" src="/static/images/logo.png" alt="logo">
-        <div class = "frame-1">
-            <div class="text comfortaa-normal-white-24px">Статии</div>
-            <div class="text comfortaa-normal-white-24px">Оферти на деня</div>
-            <div class="text comfortaa-normal-white-24px">Продукти</div>
-        </div>
-    </div>
+{% endblock %}
+{% block main %}
     <div class="slider">
         <img class="image-slider" src="/static/images/slider1.jpg" alt="promo">
     </div>
@@ -35,90 +26,114 @@
     </div>
     <div class="textoferti">Оферти на деня</div>
     <div class="products">
-        <div class="product-card">
-            <img class = "card-image"src="https://s13emagst.akamaized.net/products/48592/48591241/images/res_427992596019b4690e24dcda076fff6a.jpg?width=720&height=720&hash=CEFD56ABAF75524830B17742D9E971DC">
-            <div class = "content">
-                <div class="title-1">
-                    <p class="title">Смартфон Apple iPhone 14 Pro Max, 128GB, 5G, Silver</p>
+        {% for product in dict1 %}
+            <div class="product-card">
+                <div class="border-image">
+                    <img class = "card-image images" src="{{ dict1[product].image }}">
                 </div>
-                <div class="price">
-                    <div class="price-old">
-                        <div class="price-old-lev smaller">
-                            169
+                <div class = "content">
+                    <div class="title-1">
+                        <p class="title">{{ dict1[product].title }}</p>
+                    </div>
+                    <div class="price">
+                        <div class="price-old">
+                            <div class="price-old-lev">
+                                {{ dict1[product].lev}}
+                            </div>
+                            <div class="old-st-text">
+                                <div class="price-old-st">
+                                    .{{ dict1[product].st }}
+                                </div>
+                                <div class="price-old-lv-text">
+                                    лв
+                                </div>
+                            </div>
                         </div>
-                        <div class="old-st-text">
-                            <div class="price-old-st smaller1">
-                                .69
+                        <div class="price-old new">
+                            <div class="price-old-lev black">
+                                {{ dict1[product].lev}}
                             </div>
-                            <div class="price-old-lv-text smaller1">
-                                лв
+                            <div class="old-st-text">
+                                <div class="price-old-st black">
+                                    .{{ dict1[product].st }}
+                                </div>
+                                <div class="price-old-lv-text new-st">
+                                    лв
+                                </div>
                             </div>
+                        </div>
+                        <div class="enter">
+                            <img class="arrow" src="/static/images/arrow-right.png">
                         </div>
                     </div>
-                    <div class="price-old new">
-                        <div class="price-old-lev black">
-                            169
-                        </div>
-                        <div class="old-st-text">
-                            <div class="price-old-st black">
-                                .69
-                            </div>
-                            <div class="price-old-lv-text new-st">
-                                лв
-                            </div>
-                        </div>
-                    </div>
-                    <div class="enter">
-                        <img style="width:50%;height:75%;margin-left: 25%;margin-top: 10%; "src="/static/images/arrow-right.png">
+                    <div class="logo">
+                        <img style="margin-left: 25%; height: 100%;width: 50%;" src="/static/images/techo.png">
                     </div>
                 </div>
-                <div class="logo">
-                    <img style="margin-left: auto; margin-right: auto; height: 100%;" src="/static/images/techo.png">
-                </div>
-
             </div>
-        </div>
-        <div class="product-card">
-
-        </div>
-        <div class="product-card">
-
-        </div>
-        <div class="product-card">
-
-        </div>
-        <div class="product-card">
-
-        </div>
+        {% endfor %}
     </div>
     <div class="statiinav">
         <div class="nav">
-            <div id="nav1">монитори
+            <div onmouseover="statii1(0)"  id="nav1">монитори
             </div>
             <div class="animation" id="animation1"></div>
-            <div id="nav2">лаптопи
-                <div class="animation" id="animation2"></div>
+            <div onmouseover="statii1(1)" id="nav2">лаптопи
             </div>
-            <div id="nav3">телефони
-                <div class="animation" id="animation3"></div>
+            <div class="animation" id="animation2"></div>
+            <div onmouseover="statii1(2)" id="nav3">телефони
             </div>
-            <div id="nav4">телевизори
-                <div class="animation" id="animation4"></div>
+            <div class="animation" id="animation3"></div>
+            <div onmouseover="statii1(3)" id="nav4">телевизори
             </div>
-            <div id="nav5">компютри
-                <div class="animation" id="animation5"></div>
+            <div class="animation" id="animation4"></div>
+            <div onmouseover="statii1(4)" id="nav5">компютри
             </div>
-            <div id="nav6">компютърна периферия
-                <div class="animation" id="animation"></div>
+            <div class="animation" id="animation5"></div>
+            <div onmouseover="statii1(5)" id="nav6">компютърна периферия
+            </div>
+            <div class="animation6" id="animation6"></div>
+        </div>
+        <div class="select">
+            <div class="homepage-statii-content" id ="statii1">{% for i in postsall %}
+                <li class="homepage-statii-content-text">{{i.title}}</li>
+                {% endfor %}
+            </div>
+            <div class="homepage-statii-content statii2">
+                {% for i in postsall %}
+                <li class="homepage-statii-content-text">2{{i.title}}</li>
+                {% endfor %}
+            </div>
+            <div class="homepage-statii-content statii3">
+                {% for i in postsall %}
+                <li class="homepage-statii-content-text">3{{i.title}}</li>
+                {% endfor %}
+            </div>
+            <div class="homepage-statii-content statii4">
+                {% for i in postsall %}
+                <li class="homepage-statii-content-text">4{{i.title}}</li>
+                {% endfor %}
+            </div>
+            <div class="homepage-statii-content statii5">
+                {% for i in postsall %}
+                <li class="homepage-statii-content-text">5{{i.title}}</li>
+                {% endfor %}
+            </div>
+            <div class="homepage-statii-content statii6">
+                {% for i in postsall %}
+                <li class="homepage-statii-content-text">6{{i.title}}</li>
+                {% endfor %}
             </div>
         </div>
-        <div class="select"></div>
     </div>
     <div class="abonament">
         <form style="width:100%; height: 100%;">
-            <input style="height: 27px; width: 400px; margin-top: auto; margin-bottom: auto; " type="text">
-            <button type="submit" class="btn btn-primary"></button>
+            <input  type="text" id="buletina">
+            <button type="submit", id="button"></button>
         </form>
     </div>
     <div class="footer"></div>
+    <script type="text/javascript" src="./static/scripts/statii.js"></script>
+    <script type="text/javascript" src="./static/scripts/image-adjust.js"></script>
 </body>
+{% endblock %}

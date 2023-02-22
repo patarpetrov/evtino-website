@@ -2,19 +2,24 @@
 <head>
     <link rel="stylesheet" href="./static/homepage.css">
     <link rel="stylesheet" href="./static/statii.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}{% endblock %}
 </head>
 <body>
-    <div class="nav-menu">
-        <a href="/">
-            <img class="image-1" src="/static/images/logo.png" alt="logo">
-        </a>
-        <div class = "frame-1">
-            <div class="text comfortaa-normal-white-24px"><a href="/statii">Статии</a></div>
-            <div class="text comfortaa-normal-white-24px">Оферти на деня</div>
-            <div class="text comfortaa-normal-white-24px"><a href="/products">Продукти</a></div>
+    <div class="nav-wrapp">
+        <div class="nav-menu">
+            <a href="/">
+                <img class="image-1" src="/static/images/logo.png" alt="logo">
+            </a>
+            <div class = "frame-1">
+                <div class="text comfortaa-normal-white-24px"><a href="/statii">Статии</a></div>
+                <div class="text comfortaa-normal-white-24px">Оферти на деня</div>
+                <div class="text comfortaa-normal-white-24px"><a href="/products">Продукти</a></div>
+            </div>
         </div>
     </div>
     <main>
         {% block main %}{% endblock %}
     </main>
+    <div class="footer"></div>
+</body>

@@ -12,4 +12,4 @@ def index():
 
     statii = sessiondb.query(Post).all()
     sessiondb.close()
-    return render_template("allstatii.html")
+    return render_template("allstatii.html", statii=statii)

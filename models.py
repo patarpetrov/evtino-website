@@ -5,7 +5,8 @@ Base = declarative_base()
 
 class Post(Base):
     __tablename__ = 'post'
-
+    
+    mainimage = db.Column(db.String)
     intro = db.Column(db.String)
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String)

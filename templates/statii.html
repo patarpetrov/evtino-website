@@ -4,28 +4,28 @@
 {% endblock %}
 
 {% block main %}
-<h1>{{statia.title}}</h1>
+<h1>mesi</h1>
 {% for i in range(5) %}
     <div class="box">
         <div class = "content1">
             <div class="image-content">
-                <img class="image" src="https://evtino.s3.eu-central-1.amazonaws.com/{{ statia.products[i].imagepath }}">
+                <img class="image" src="https://evtino.s3.eu-central-1.amazonaws.com/{{ productslist[i].imagepath }}">
             </div>
             <div class="info-content">
-                <h2>{{statia.products[i].productname}}</h2>
+                <h2>{{productslist[i].productname}}</h2>
                 
-                {{statia.products[i].content}}
+                {{productslist[i].content}}
             </div>
             <div class="specs-content">
                 <div class="row">
-                    <div class="item"><span class="specs">{{statia.spec1}}</span><br>{{statia.products[i].spec1answ}}</div>
-                    <div class="item"><span class="specs">{{statia.spec2}}</span><br>{{statia.products[i].spec2answ}}</div>
-                    <div class="item"><span class="specs">{{statia.spec3}}</span><br>{{statia.products[i].spec3answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec1}}</span><br>{{productslist[i].spec1answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec2}}</span><br>{{productslist[i].spec2answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec3}}</span><br>{{productslist[i].spec3answ}}</div>
                 </div>
                 <div class="row">
-                    <div class="item"><span class="specs">{{statia.spec4}}</span><br>{{statia.products[i].spec4answ}}</div>
-                    <div class="item"><span class="specs">{{statia.spec5}}</span><br>{{statia.products[i].spec5answ}}</div>
-                    <div class="item"><span class="specs">{{statia.spec6}}</span><br>{{statia.products[i].spec6answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec4}}</span><br>{{productslist[i].spec4answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec5}}</span><br>{{productslist[i].spec5answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec6}}</span><br>{{productslist[i].spec6answ}}</div>
                 </div>
             </div>
             <div class="prices-content">

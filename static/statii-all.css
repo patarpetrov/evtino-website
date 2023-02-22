@@ -1,8 +1,9 @@
 .main-statii{
     width:75%;
+    max-width: 1080px;
     margin-left:auto;
     margin-right:auto;
-    margin-top:3%;
+    margin-top:45px;
     height:450px;
     display:grid;
     grid-template-columns: 60% 33%;
@@ -44,6 +45,9 @@
 .more-statii{
     margin-top: 120px;
     width:100%;
+    max-width: 1440px;
+    margin-left:auto;
+    margin-right:auto;
 }
 .border{
     margin-left:auto;
@@ -60,4 +64,37 @@
     width:fit-content;
     font-size: 24px;
     margin-left:50px;
+}
+.content-statiq-secondary{
+    width:100%;
+    height:100%;
+    background-color:#2F2FA2;
+    display:grid;
+    grid-template-rows: 20% 80%;
+
+}
+.statia-all{
+    
+    width: 80%;
+    margin-left:auto;
+    margin-right:auto;
+    height:250px;
+    display:grid;
+    grid-template-columns: 30% 60%;
+    gap:10%;
+}
+.statia-secondary{
+    display:flex;
+    align-items: center;
+}
+.border-image{
+    height:250px;
+    margin-left:auto;
+    margin-right:auto;
+}
+.content-statiq-secondary-title{
+    color:white;
+    font-family: var(--font-family-rubik_mono_one);
+    font-size:26px;
+    text-align:center;
 }

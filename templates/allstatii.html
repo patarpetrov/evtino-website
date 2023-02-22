@@ -24,7 +24,22 @@
         <div id="border-text">
             Предишни статии
         </div>
-        
     </div>
+    {% for statiq in statii %}
+        <div class="statia-all">
+            <div class="border-image">
+                <img class="statia-secondary images" src="https://evtino.s3.eu-central-1.amazonaws.com/{{statiq.mainimage}}">
+            </div>
+            <div class="content-statiq-secondary">
+                <div class="content-statiq-secondary-title">
+                    {{statiq.title}}
+                </div>
+                <div class="content-statia-secondary-intro">
+                    {{statiq.intro}}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 </div>
+<script type="text/javascript" src="./static/scripts/image-adjust.js"></script>
 {% endblock %}

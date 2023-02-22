@@ -38,6 +38,9 @@ Base.metadata.create_all(engine)
 base = declarative_base()
 #Productstorespec.__table__.drop(engine)
 #Productstore.__table__.drop(engine)
+#Products.__table__.drop(engine)
+#Post.__table__.drop(engine)
+
 
 with app.app_context():
     #db.create_all()
@@ -72,14 +75,22 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+@app.errorhandler(500)
+def sessionerror():
+    print("ankara")
+    return redirect()
 
 @app.route("/", methods=["GET"])
 def index():
     if request.method == "GET":
+        Session = sessionmaker(bind=engine)
+        sessiondb = Session()
+        postsall = sessiondb.query(Post).limit(5).all()
+
         with open("./static/top5.json", "r", encoding="utf-8") as f:
             data = json.load(f)
             print(type(data))
-        return render_template("homepage1.html", dict1 = data)
+        return render_template("homepage.html", dict1 = data, postsall= postsall)
     
 
 @app.route("/admin-login", methods=["GET", "POST"])
@@ -122,7 +133,8 @@ def napishi():
         file2 = request.files['file2']
         file3 = request.files['file3']
         file4 = request.files['file4']
-        files = [file, file1, file2, file3, file4]
+        file5 = request.files['file-main']
+        files = [file, file1, file2, file3, file4, file5]
 
         intro = request.form.get("intro")
         title = request.form.get("title")
@@ -152,17 +164,17 @@ def napishi():
                 message = 'Allowed image types are - png, jpg, jpeg, gif'
                 #return render_template("din-napishi.html", message = message)
                 
-        post_new = Post(intro = intro, slug = slug, title = title, category = category, spec1 = specList[0], spec2 = specList[1], spec3 = specList[2], spec4 = specList[3], spec5 = specList[4], spec6 = specList[5])
+        post_new = Post(mainimage = files1[5], intro = intro, slug = slug, title = title, category = category, spec1 = specList[0], spec2 = specList[1], spec3 = specList[2], spec4 = specList[3], spec5 = specList[4], spec6 = specList[5])
         sessiondb.add(post_new)
         sessiondb.commit()
-    
+
         obj = sessiondb.query(Post).order_by(Post.id.desc()).first()
         
-        products = Products(id = id1[0], store = "emag", pageused = obj, productname = product_name[0], imagepath = files1[0], content = content[0], spec1answ = spec1answ[0], spec2answ = spec1answ[1], spec3answ = spec1answ[2], spec4answ = spec1answ[3], spec5answ = spec1answ[4], spec6answ = spec1answ[5])
-        products1 = Products(id = id1[1], store = "emag", pageused = obj, productname = product_name[1], imagepath = files1[1], content = content[1], spec1answ = spec2answ[0], spec2answ = spec2answ[1], spec3answ = spec2answ[2], spec4answ = spec2answ[3], spec5answ = spec2answ[4], spec6answ = spec2answ[5])
-        products2 = Products(id = id1[2], store = "emag", pageused = obj, productname = product_name[2], imagepath = files1[2], content = content[2], spec1answ = spec3answ[0], spec2answ = spec3answ[1], spec3answ = spec3answ[2], spec4answ = spec3answ[3], spec5answ = spec3answ[4], spec6answ = spec3answ[5])
-        products3 = Products(id = id1[3], store = "emag", pageused = obj, productname = product_name[3], imagepath = files1[3], content = content[3], spec1answ = spec4answ[0], spec2answ = spec4answ[1], spec3answ = spec4answ[2], spec4answ = spec4answ[3], spec5answ = spec4answ[4], spec6answ = spec4answ[5])
-        products4 = Products(id = id1[4], store = "emag", pageused = obj, productname = product_name[4], imagepath = files1[4], content = content[4], spec1answ = spec5answ[0], spec2answ = spec5answ[1], spec3answ = spec5answ[2], spec4answ = spec5answ[3], spec5answ = spec5answ[4], spec6answ = spec5answ[5])
+        products = Products(productid = id1[0], store = "emag", pageused = obj, productname = product_name[0], imagepath = files1[0], content = content[0], spec1answ = spec1answ[0], spec2answ = spec1answ[1], spec3answ = spec1answ[2], spec4answ = spec1answ[3], spec5answ = spec1answ[4], spec6answ = spec1answ[5])
+        products1 = Products(productid = id1[1], store = "emag", pageused = obj, productname = product_name[1], imagepath = files1[1], content = content[1], spec1answ = spec2answ[0], spec2answ = spec2answ[1], spec3answ = spec2answ[2], spec4answ = spec2answ[3], spec5answ = spec2answ[4], spec6answ = spec2answ[5])
+        products2 = Products(productid = id1[2], store = "emag", pageused = obj, productname = product_name[2], imagepath = files1[2], content = content[2], spec1answ = spec3answ[0], spec2answ = spec3answ[1], spec3answ = spec3answ[2], spec4answ = spec3answ[3], spec5answ = spec3answ[4], spec6answ = spec3answ[5])
+        products3 = Products(productid = id1[3], store = "emag", pageused = obj, productname = product_name[3], imagepath = files1[3], content = content[3], spec1answ = spec4answ[0], spec2answ = spec4answ[1], spec3answ = spec4answ[2], spec4answ = spec4answ[3], spec5answ = spec4answ[4], spec6answ = spec4answ[5])
+        products4 = Products(productid = id1[4], store = "emag", pageused = obj, productname = product_name[4], imagepath = files1[4], content = content[4], spec1answ = spec5answ[0], spec2answ = spec5answ[1], spec3answ = spec5answ[2], spec4answ = spec5answ[3], spec5answ = spec5answ[4], spec6answ = spec5answ[5])
         products_list = [products, products1, products2, products3, products4]
         sessiondb.add(products)
         sessiondb.add(products1)
@@ -170,8 +182,10 @@ def napishi():
         sessiondb.add(products3)
         sessiondb.add(products4)
         sessiondb.commit()
+        #sessiondb.close()
+        prod = sessiondb.query(Products).filter_by(pageused = obj).all()
         sessiondb.close()
-        return render_template("statii.html", statia = post_new, productslist = products_list)
+        return render_template("statii.html", statia = post_new, productslist = prod)
 
 @app.route("/adminproduct", methods = ["GET", "POST"])
 @login_required
