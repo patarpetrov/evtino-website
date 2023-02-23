@@ -27,6 +27,7 @@ conn = engine.connect()
 app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = "secret key"
+print(os.getenv("DATABASE_URI"))
 print(os.getenv('AWS_SECRET_ACCESS_KEY'))
 Session(app)
 
