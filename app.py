@@ -227,27 +227,27 @@ def prodspec1(id):
         Session = sessionmaker(bind=engine)
         sessiondb = Session()
     
-
-        #new = Productstorespec()
         files1 = []
+        
         res = sessiondb.query(Productstore).filter_by(id = id).first()
         new = sessiondb.query(Productstorespec).filter_by(main = res.id).first()
+
         if not new:
-            print("new")
             new = Productstorespec()
-        #res1 = Productstore.query.filter_by(id = id).first()
         files = [request.files['file1'], request.files['file2'], request.files['file3'], request.files['file4'], request.files['file5'], request.files['file6'], request.files['file7'], request.files['mainimage']]
         for file in files:
             if file.filename != '' and allowed_file(file.filename):
-                #filename = secure_filename(file.filename)
-                #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 new_filename = save_file(file)
                 emag_filename = f"https://evtino.s3.eu-central-1.amazonaws.com/{new_filename}"
                 files1.append(emag_filename)
             else:
                 files1.append('')
 
-        if request.form.get('category') != '' : new.category = request.form.get('category')
+        items = request.form.items()
+        for item in items:
+            if item[1] != "":
+                setattr(new, item[0], item[1])
+
         if files1[7] != '': res.imagesrc = files1[7]
         sessiondb.commit()
         if files1[0] != '':
@@ -264,40 +264,7 @@ def prodspec1(id):
             new.imagepath6 = files1[5]
         if files1[6] != '':
             new.imagepath7 = files1[6]
-        if request.form.get('link') != '':
-            res.link = request.form.get("link")
-        if request.form.get('linker1') != '':
-            new.linker1 = request.form.get("linker1")
-        if request.form.get('linker2') != '':
-            new.linker2 = request.form.get("linker2")
-        if request.form.get('linker3') != '':
-            new.linker3 = request.form.get("linker3")
-        if request.form.get('linker4') != '':
-            new.linker4 = request.form.get("linker4")
-        if request.form.get('linker5') != '':
-            new.linker5 = request.form.get("linker5")
-
-        if request.form.get("spec1") != '': new.spec1 = request.form.get("spec1")
-        if request.form.get("spec2") != '': new.spec2 = request.form.get("spec2")
-        if request.form.get("spec3") != '': new.spec3 = request.form.get("spec3")
-        if request.form.get("spec4") != '': new.spec4 = request.form.get("spec4")
-        if request.form.get("spec5") != '': new.spec5 = request.form.get("spec5")
-        if request.form.get("spec6") != '': new.spec6 = request.form.get("spec6")
-        if request.form.get("spec7") != '': new.spec7 = request.form.get("spec7")
-        if request.form.get("spec8") != '': new.spec8 = request.form.get("spec8")
-        if request.form.get("spec9") != '': new.spec9 = request.form.get("spec9")
-        if request.form.get("spec10") != '': new.spec10 = request.form.get("spec10")
-        if request.form.get("spec11") != '': new.spec11 = request.form.get("spec11")
-        if request.form.get("spec12") != '': new.spec12 = request.form.get("spec12")
-        if request.form.get("spec13") != '': new.spec13 = request.form.get("spec13")
-        if request.form.get("spec14") != '': new.spec14 = request.form.get("spec14")
-        if request.form.get("spec15") != '': new.spec15 = request.form.get("spec15")
-        if request.form.get("spec16") != '': new.spec16 = request.form.get("spec16")
-        if request.form.get("spec17") != '': new.spec17 = request.form.get("spec17")
-        if request.form.get("spec18") != '': new.spec18 = request.form.get("spec18")
-        if request.form.get("spec19") != '': new.spec19 = request.form.get("spec19")
-        if request.form.get("spec20") != '': new.spec20 = request.form.get("spec20")
-
+        
         if request.form.get("opisanie") != '': new.opisanie = request.form.get("opisanie")
         new.main = res.id
         sessiondb.add(new)
