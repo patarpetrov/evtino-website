@@ -56,8 +56,11 @@ def index():
     
     print(res1)
     if res1 == []:
-        res1 = res2.all()
-        return render_template("productsfiltered.html", products1 = res1, current_url=current_url)
+        print("1")
+        smartphones = res2.filter_by(category = "smartphone")
+        tvs = res2.filter_by(category = "tv")
+        sessiondb.close()
+        return render_template("productsall.html", smartphones = smartphones, tvs = tvs, current_url=current_url)
 
     if res1 == [[]]:
         message = "No products found teu"
@@ -65,6 +68,7 @@ def index():
         sessiondb.close()
         return render_template("productsfiltered.html", products1 = res1, current_url=current_url)
     print(res2)
+    print("2")
     sessiondb.close()
     return render_template("productsfiltered.html", products1 = res1, current_url=current_url)
     #return render_template("productsall.html", smartphones = smartphones, current_url = current_url)

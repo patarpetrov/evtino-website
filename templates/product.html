@@ -6,6 +6,9 @@
 
 {% endblock %}
 {% block main %}
+<div class="main-image-phone">
+    <img id >
+</div>
 <div class="wrapper-product">
     <div class="images">
         <div class="main-image main">
@@ -35,17 +38,17 @@
             </div>
 
             <div class="secondary-image-child">
-                {% if specification.imagepath5 != ''  and specification.imagepath4 is not none%}
+                {% if specification.imagepath5 != ''  and specification.imagepath5 is not none%}
                 <img class="images secondary" src="{{specification.imagepath5}}">
                 {% endif %}
             </div>
             <div class="secondary-image-child">
-                {% if specification.imagepath6 != ''  and specification.imagepath4 is not none%}
+                {% if specification.imagepath6 != ""  and specification.imagepath6 is not none%}
                 <img class="images secondary" src="{{specification.imagepath6}}">
                 {% endif %}
             </div>
             <div class="secondary-image-child">
-                {% if specification.imagepath7 != ''  and specification.imagepath4 is not none%}
+                {% if specification.imagepath7 != ""  and specification.imagepath7 is not none%}
                 <img class="images secondary" src="{{specification.imagepath7}}">
                 {% endif %}
             </div>

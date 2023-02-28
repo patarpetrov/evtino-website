@@ -41,7 +41,6 @@
 
             </div>
             <div class="category-background">
-
                 {% for smartphone in smartphones%}
                 <a href="/products/product-{{smartphone.id}}">
                 <div class="product-card productall 1">
@@ -122,33 +121,34 @@
             </a>
                 {% endfor %}
             </div>
+
+            
             
             <div class="productall-title title margin">
-                <div id="title1">Смарфони</div><button class="behind">behind</button>
+                <div id="title1">Телевизори</div><button class="behind">behind</button>
                 <button class="behind">behind</button>
 
             </div>
      
        
             <div class="category-background">
-
-                {% for smartphone in smartphones%}
-                <a href="/products/{{smartphone.id}}">
+                {% for tv in tvs%}
+                <a href="/products/{{tv.id}}">
                 <div class="product-card productall 2">
-                    <img class="card-image" src="{{ smartphone.imagesrc }}">
+                    <img class="card-image" src="{{ tv.imagesrc }}">
                     <div class="content">
                         <div class="title-1">
-                            <p class="title">{{ smartphone.productname}}</p>
+                            <p class="title">{{ tv.productname}}</p>
                         </div>
                         <div class="price">
-                            {% if smartphone.levsale %}
+                            {% if tv.levsale %}
                             <div class="price-old">
                                 <div class="price-old-lev">
-                                    {{ smartphone.lev }}
+                                    {{ tv.lev }}
                                 </div>
                                 <div class="old-st-text">
                                     <div class="price-old-st">
-                                        {{ smartphone.st}}
+                                        {{ tv.st}}
                                     </div>
                                     <div class="price-old-lv-text">
                                         лв
@@ -157,11 +157,11 @@
                             </div>
                             <div class="price-old new">
                                 <div class="price-old-lev black">
-                                    {{ smartphone.levsale }}
+                                    {{ tv.levsale }}
                                 </div>
                                 <div class="old-st-text">
                                     <div class="price-old-st black">
-                                        {{ smartphone.stsale }}
+                                        {{ tv.stsale }}
                                     </div>
                                     <div class="price-old-lv-text new-st">
                                         лв
@@ -171,11 +171,11 @@
                             {% else %}
                             <div class="price-old new">
                                 <div class="price-old-lev black">
-                                    {{ smartphone.lev }}
+                                    {{ tv.lev }}
                                 </div>
                                 <div class="old-st-text">
                                     <div class="price-old-st black">
-                                        {{ smartphone.st}}
+                                        {{ tv.st}}
                                     </div>
                                     <div class="price-old-lv-text new-st">
                                         лв
@@ -201,7 +201,7 @@
                                     src="/static/images/arrow-right.png">
                             </div>
                         </div>
-                        {% if smartphone.store == "emag" %}
+                        {% if tv.store == "emag" %}
                         <div class="logo">
                             <img style="margin-left: 37.5%; height: 60%; width: 25%; margin-top: 5%;"
                                 src="/static/images/emag.png">
@@ -218,5 +218,5 @@
 </div>
 
 </div>
-<script type="text/javascript" src="./static/slider.js"></script>
+<script type="text/javascript" src="./static/scripts/slider.js"></script>
 {%endblock%}

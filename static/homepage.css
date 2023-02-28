@@ -40,6 +40,9 @@ a{
     width: 90%;
     max-width:1280px;
 }
+.nav-menu-phone{
+    display:none;
+}
 .frame-1 {
     float: right;
     align-items: center;
@@ -81,14 +84,15 @@ a{
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
 }
-.badges img {
+.badge-image {
     width: 66px;
     height: 66px;
     
 }
 .badge {
     display: grid;
-    grid-template-columns: 66px auto;
+    grid-template-rows: 60% 30%;
+    gap:2%;
 }
 
 .valign-text-middle {
@@ -595,10 +599,15 @@ a{
         display:none;
         height:20px;
     }
+    .textoferti{
+        font-size:22px;
+        margin-bottom:0px;
+    }
     .products{
         grid-template-columns: 150px 150px 150px 150px 150px;
         overflow:hidden;
-        width:fit-content;
+        width:97.5vw;
+        height:300px;
         margin-left:2.5%;
     }
     .card-image{
@@ -609,6 +618,9 @@ a{
         width:150px;
         height:300px;
     }
+    .logo{
+        width:150px;
+    }
     .border-image{
         width:150px; 
         height:100%;
@@ -618,10 +630,12 @@ a{
     }
     .title{
         width:150px;
-        font-size:10px;
+        font-size:12px;
+        margin-top:0px;
+        margin-bottom: 0px;
     }
     .title-1{
-        margin-left: 0px;
+        margin-left: 5%;
         width:150px;
     }
     .price{
@@ -643,5 +657,68 @@ a{
     .arrow{
         margin-right:5px;
     }
-
+    .last-badge{
+        display:none;
+    }
+    .badges{
+        height:fit-content;
+        width:90vw;
+        grid-template-columns: auto auto auto;
+    }
+    .badge-image{
+        margin-left:auto;
+        margin-right:auto;
+        width:40px;
+        height:40px;
+    }
+    .abonament{
+        margin-top:50px;
+        height:75px;
+        border-radius:10px
+    }
+    #buletina {
+        width:75%;
+        margin-top:10px;
+        margin-left:2.5%;
+        border-radius: 25px;
+        float:left;
+    }
+    #button{
+        float:left;
+        color: #f64c72;
+        width: 15%;
+        height: 35px;
+        margin-left:5%;
+        margin-top:10px;
+        border-radius: 10px;
+    }
+    .buletina-text{
+        font-family: var(--font-family-rubik_mono_one);
+        color:white;
+        font-size:10px;
+        width:fit-content;
+        height:fit-content;
+        margin-left:2.5%;
+        margin-top:11%;
+    }
+    .rubikmonoone-normal-white-14px{
+        font-size:9px;
+    }
+    .nav-menu-phone{
+        display:block;
+        width:100%;
+        height:100%;
+    }
+    .nav-menu-phone a{
+        height: fit-content;
+        width: fit-content;
+        display: block;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .image-1{
+        margin-left:auto;
+        margin-right:auto;
+        float: none;
+    }
 }

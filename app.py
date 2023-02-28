@@ -1,8 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from sqlalchemy import ForeignKey, create_engine, MetaData
 from sqlalchemy_utils import database_exists, create_database
@@ -17,8 +15,6 @@ import os
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
-
-
 from config import Config
 print(os.getenv("DATABASE_URI"))
 engine = create_engine(os.getenv("DATABASE_URI"))
@@ -39,6 +35,7 @@ base = declarative_base()
 #Products.__table__.drop(engine)
 #Post.__table__.drop(engine)
 
+from scraping import scrapeTechnopolis, scrapeEmag
 
 with app.app_context():
     #db.create_all()
@@ -77,6 +74,7 @@ def login_required(f):
 def sessionerror():
     print("ankara")
     return redirect()
+
 
 @app.route("/", methods=["GET"])
 def index():
@@ -192,96 +190,15 @@ def product():
     if request.method == "GET":
         return render_template("adminproduct.html")
     if request.method == "POST":
-        Session = sessionmaker(bind=engine)
-        sessiondb = Session()
-
         link = request.form.get("link")
         storename = str(request.form.get("storename"))
-        header = {
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36" ,
-    'referer':'https://www.google.com/'
-}
-        html_text = requests.get(link ,headers=header).text
-        soup = BeautifulSoup(html_text, 'lxml')
-        existing = []
-        print(storename)
         if storename == "emag":
-            products = soup.find_all('div', class_ = "card-item card-standard js-product-data")
-            
-            for product in products:
-                Session = sessionmaker(bind=engine)
-                sessiondb = Session()
-                productname1 = product.find('a', class_ = "card-v2-title semibold mrg-btm-xxs js-product-url").text.replace("  ", "")
-                image1 = product.find('img')["src"]
-                price = int(product.find('p', class_ = "product-new-price").text.replace(" лв", "").replace(".", "").replace(",", "").replace(".", "").replace("от ", ""))
-                st1 = f'{(price%100):02}'
-
-                new_product = Productstore(store = "emag", productname = productname1, imagesrc = image1, lev = price//100, st = st1)
-                #exist = Productstore.query.filter_by(productname = new_product.productname).first()
-                exist = sessiondb.query(Productstore).filter_by(productname = new_product.productname).first()
-                print(new_product.productname)
-                nochange = 0
-                if exist:
-                    if exist.lev == new_product.lev:
-                        nochange += 1 
-                    else:
-                        razlika = int(exist.lev) - int(new_product.lev)
-                        if razlika > 10:
-                            exist.levsale = new_product.lev
-                            exist.stsale = new_product.st
-                        else:
-                            exist.lev = new_product.lev
-                            exist.st = new_product.st
-                            exist.levsale = None
-                            exist.stsale = None
-                        sessiondb.commit()
-
-                else:
-                    print("2")
-                    sessiondb.add(new_product)
-                    sessiondb.commit()
-
+            scrapeEmag(link)
 
         if storename == "technopolis":
-            print("1")
-            products = soup.find_all('div', class_ = "product-box js-product__box")
-            print(products)
-            for product in products:
-                productname1 = product.find('a', class_ = "product-box__title-link").text.replace("  ", "")
-                price = int(product.find('span', class_ = "product-box__price-value").text.replace(" лв", "").replace(".", "").replace(",", "").replace(".", "").replace(" ", ""))
-                st1 = str(product.find('sup').text)
-
-                new_product = Productstore(store = "technopolis", productname = productname1, lev = price, st = st1)
-                #exist = Productstore.query.filter_by(productname = new_product.productname).first()
-                exist = sessiondb.query(Productstore).filter_by(productname = new_product.productname).first()
-                nochange = 0
-                if exist:
-                    if exist.lev == new_product.lev:
-                        nochange += 1 
-                    else:
-                        razlika = int(exist.lev) - int(new_product.lev)
-                        if razlika > 10:
-                            exist.levsale = new_product.lev
-                            exist.stsale = new_product.st
-                        else:
-                            exist.lev = new_product.lev
-                            exist.st = new_product.st
-                            exist.levsale = None
-                            exist.stsale = None
-                        sessiondb.commit()
-
-                else:
-                    print("2")
-                    sessiondb.add(new_product)
-                    sessiondb.commit()
-
-        #print(existing)
-        #print(len(existing))
-        #all = Productstore.query.all()
-        all = sessiondb.query(Productstore).all()
-        sessiondb.close()
+            scrapeTechnopolis(link)
+            
         return redirect("/adminnspecpro")
-        #return render_template("products.html", products1 = all, length = len(existing))
 
 
 @app.route("/adminnspecpro", methods = ["GET", "POST"])

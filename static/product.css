@@ -260,3 +260,19 @@
     border-radius: 10px;
     
 }
+.main-image-phone{
+    display:none;
+}
+@media only screen and (max-width: 768px){
+    .wrapper-product{
+        display:none;
+    }
+    .main-image-phone{
+        display:block;
+        width:90vw;
+        margin-left:auto;
+        margin-right:auto;
+        height:200px;
+        background-color: red;
+    }
+}
