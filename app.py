@@ -1,21 +1,19 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
-from flask_admin.contrib.sqla import ModelView
-from sqlalchemy import ForeignKey, create_engine, MetaData
-from sqlalchemy_utils import database_exists, create_database
+
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from bs4 import BeautifulSoup
-import requests
+
 import boto3
 import uuid
 import json
-import urllib.request
 import os
-from werkzeug.utils import secure_filename
-from werkzeug.security import check_password_hash, generate_password_hash
+
+from werkzeug.security import check_password_hash
 from functools import wraps
 from config import Config
+from psycopg2 import OperationalError, errorcodes, errors
 print(os.getenv("DATABASE_URI"))
 engine = create_engine(os.getenv("DATABASE_URI"))
 conn = engine.connect()
@@ -78,6 +76,7 @@ def checkandSaveFileLink(files):
             files1.append('')
     return files1
 
+
 def saveProductsStatii(iterable, products, spec):
     index1 = 0
     for i in iterable:
@@ -85,6 +84,7 @@ def saveProductsStatii(iterable, products, spec):
                 setattr(products[index1], spec, i)
             index1 += 1
     return products
+
 
 def newProductsStatii(iterable, products, spec):
     index1 = 0
@@ -95,10 +95,10 @@ def newProductsStatii(iterable, products, spec):
 
 
 def save_file(file):
-    #filename = secure_filename(file.filename)
     new_filename = uuid.uuid4().hex + '.' + file.filename.rsplit('.', 1)[1].lower()
     s3.Bucket(BUCKET_NAME).upload_fileobj(file, new_filename)
     return new_filename
+
 
 def login_required(f):
     """
@@ -113,7 +113,8 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-@app.errorhandler(500)
+
+@app.errorhandler(OperationalError)
 def sessionerror():
     print("ankara")
     return redirect()
@@ -136,7 +137,7 @@ def index():
 @app.route("/admin-login", methods=["GET", "POST"])
 def d():
     if request.method == "GET":
-        return render_template("d.html")
+        return render_template("login.html")
     if request.method == "POST":
         with open("./static/d.json", "r") as f:
             data = json.load(f)
@@ -144,7 +145,7 @@ def d():
             pas = request.form.get("pas")
             if not check_password_hash(data['usr'], user) or not check_password_hash(data['psw'], pas):
                 print("wrong pass")
-                return render_template("d.html")
+                return render_template("login.html")
             else: 
                 session['usr'] = 0
                 print("d.")
@@ -194,13 +195,12 @@ def napishi():
         # spec4answ = [request.form.get("4spec1answ"), request.form.get("4spec2answ"), request.form.get("4spec3answ"), request.form.get("4spec4answ"), request.form.get("4spec5answ"), request.form.get("4spec6answ")]
         # spec5answ = [request.form.get("5spec1answ"), request.form.get("5spec2answ"), request.form.get("5spec3answ"), request.form.get("5spec4answ"), request.form.get("5spec5answ"), request.form.get("5spec6answ")]
         products = [Products(), Products(), Products(), Products(), Products()]
-        specifications = ["spec1answ", "spec2answ", "spec3answ", "spec4answ", "spec5answ", "spec6answ", "content", "productname"]
+        specifications = ["spec1answ", "spec2answ", "spec3answ", "spec4answ", "spec5answ", "spec6answ", "content", "productname", "id"]
+
         for spec in specifications:
             products = newProductsStatii(request.form.getlist(spec), products, spec)
         
-        
         files1 = checkandSaveFile(file)
-        print(files1)
         start = 1
         post_new = Post(mainimage = files1[0], intro = intro, slug = slug, title = title, category = category, spec1 = specList[0], spec2 = specList[1], spec3 = specList[2], spec4 = specList[3], spec5 = specList[4], spec6 = specList[5])
         sessiondb.add(post_new)
@@ -223,7 +223,7 @@ def napishi():
         #
         # for i in products:
         #     sessiondb.commit(i)
-        #sessiondb.close()
+        # sessiondb.close()
         prod = sessiondb.query(Products).filter_by(pageused = obj).all()
         print(prod)
         sessiondb.close()
@@ -271,11 +271,22 @@ def prodspec1(id):
     if request.method == "POST":
         Session = sessionmaker(bind=engine)
         sessiondb = Session()
-    
-        files1 = []
 
         res = sessiondb.query(Productstore).filter_by(id = id).first()
         new = sessiondb.query(Productstorespec).filter_by(main = res.id).first()
+
+        if (request.form.get("delete") == "yes"):
+            try:
+                sessiondb.delete(new)
+                sessiondb.delete(res)
+                sessiondb.commit()
+                sessiondb.close()
+            except(Exception):
+                print("no productspec database row available")
+            return redirect("/adminnspecpro")
+
+
+        files1 = []
 
         if not new:
             new = Productstorespec()
@@ -289,7 +300,7 @@ def prodspec1(id):
                 setattr(new, item[0], item[1])
 
         
-        for i in len(files1) - 1:
+        for i in range(len(files1) - 1):
             if files1[i] != "":
                 string = f"imagepath{i}"
                 setattr(new, string, i)
@@ -364,6 +375,7 @@ def statii1(slug):
         category = request.form.get("category")
         slug = request.form.get("slug")
         intro = request.form.get('intro')
+
         if category != '': statia.category = category
         if title != '': statia.title = title
         if slug != '': statia.slug = slug
