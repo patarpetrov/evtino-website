@@ -9,23 +9,23 @@
     <div class="box">
         <div class = "content1">
             <div class="image-content">
-                <img class="image" src="https://evtino.s3.eu-central-1.amazonaws.com/{{ statia.products[i].imagepath }}">
+                <img class="image" src="https://evtino.s3.eu-central-1.amazonaws.com/{{ products[i].imagepath }}">
             </div>
             <div class="info-content">
-                <h2>{{statia.products[i].productname}}</h2>
+                <h2>{{products[i].productname}}</h2>
                 
-                {{statia.products[i].content}}
+                {{products[i].content}}
             </div>
             <div class="specs-content">
                 <div class="row">
-                    <div class="item"><span class="specs">{{statia.spec1}}</span><br>{{statia.products[i].spec1answ}}</div>
-                    <div class="item"><span class="specs">{{statia.spec2}}</span><br>{{statia.products[i].spec2answ}}</div>
-                    <div class="item"><span class="specs">{{statia.spec3}}</span><br>{{statia.products[i].spec3answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec1}}</span><br>{{products[i].spec1answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec2}}</span><br>{{products[i].spec2answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec3}}</span><br>{{products[i].spec3answ}}</div>
                 </div>
                 <div class="row">
-                    <div class="item"><span class="specs">{{statia.spec4}}</span><br>{{statia.products[i].spec4answ}}</div>
-                    <div class="item"><span class="specs">{{statia.spec5}}</span><br>{{statia.products[i].spec5answ}}</div>
-                    <div class="item"><span class="specs">{{statia.spec6}}</span><br>{{statia.products[i].spec6answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec4}}</span><br>{{products[i].spec4answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec5}}</span><br>{{products[i].spec5answ}}</div>
+                    <div class="item"><span class="specs">{{statia.spec6}}</span><br>{{products[i].spec6answ}}</div>
                 </div>
             </div>
             <div class="prices-content">
@@ -54,72 +54,22 @@
             category: <input type = "text" name = "category"><br>
             intro: <input type="text" name="intro"><br><br><br><br>
     
-    
+            {% for i in range(5) %}
             1:
             Product name
             <input type ="text" name = "productname"><br>Product id:<input type="number" name = "id"><br>
             <input type="file" name="file" class="form-control" autocomplete="off" ><br>
             Content:<input type = "text" name = "content"><br>
-            specifications:<input type = "text" name="1spec1answ">
-            <input type = "text" name="1spec2answ">
-            <input type = "text" name="1spec3answ">
-            <input type = "text" name="1spec4answ">
-            <input type = "text" name="1spec5answ">
-            <input type = "text" name="1spec6answ">
+            specifications:<input type = "text" name="spec1answ">
+            <input type = "text" name="spec2answ">
+            <input type = "text" name="spec3answ">
+            <input type = "text" name="spec4answ">
+            <input type = "text" name="spec5answ">
+            <input type = "text" name="spec6answ">
             <br>
             <br>
-            2:
-            Product name
-            <input type ="text" name = "productname1">Product id:<input type="number" name = "id1"><br>
-            <input type="file" name="file1" class="form-control" autocomplete="off" ><br>
-            Content:<input type = "text" name = "content1">
-            specifications:<input type = "text" name="2spec1answ">
-            <input type = "text" name="2spec2answ">
-            <input type = "text" name="2spec3answ">
-            <input type = "text" name="2spec4answ">
-            <input type = "text" name="2spec5answ">
-            <input type = "text" name="2spec6answ">
-            <br>
-            <br>
-            3:
-            Product name
-            <input type ="text" name = "productname2">Product id:<input type="number" name = "id2"><br>
-            <input type="file" name="file2" class="form-control" autocomplete="off" ><br>
-            Content:<input type = "text" name = "content2">
-            specifications:<input type = "text" name="3spec1answ">
-            <input type = "text" name="3spec2answ">
-            <input type = "text" name="3spec3answ">
-            <input type = "text" name="3spec4answ">
-            <input type = "text" name="3spec5answ">
-            <input type = "text" name="3spec6answ">
-            <br>
-            <br>
-            4:
+            {% endfor %}
             
-            Product name
-            <input type ="text" name = "productname3">Product id:<input type="number" name = "id3"><br>
-            <input type="file" name="file3" class="form-control" autocomplete="off" ><br>
-            Content:<input type = "text" name = "content3">
-            specifications:<input type = "text" name="4spec1answ">
-            <input type = "text" name="4spec2answ">
-            <input type = "text" name="4spec3answ">
-            <input type = "text" name="4spec4answ">
-            <input type = "text" name="4spec5answ">
-            <input type = "text" name="4spec6answ">
-            <br>
-            <br>
-            5:
-           
-            Product name
-            <input type ="text" name = "productname4">Product id:<input type="number" name = "id4"><br>
-            <input type="file" name="file4" class="form-control" autocomplete="off" ><br>
-            Content:<input type = "text" name = "content4">
-            specifications:<input type = "text" name="5spec1answ">
-            <input type = "text" name="5spec2answ">
-            <input type = "text" name="5spec3answ">
-            <input type = "text" name="5spec4answ">
-            <input type = "text" name="5spec5answ">
-            <input type = "text" name="5spec6answ">
         </dl>
         <p>
             <input type="submit" value="Submit" class="btn btn-info">
