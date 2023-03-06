@@ -39,39 +39,38 @@ def index():
             tempdict.setdefault(argument, [])
             tempdict[argument].append(value)
     
-    #querying with filters   
+
     res2 = db
     res1 = []
-    #print(tempdict['category'])
+    lamp = 0
+
     if tempdict['category'] != []:
+        lamp = 1
         for i in tempdict['category']:
             res2 = res2.filter_by(category  = i)
     
     if tempdict['ram']:
-        #res1 = res2.all()
+        lamp = 2
         for i in tempdict['ram']:
-            #print(res2.filter_by(spec1 = i).all())
-            #print("===================================")
             res1 += (res2.filter_by(spec1 = i).all())
-    
-    print(res1)
-    if res1 == []:
-        print("1")
-        smartphones = res2.filter_by(category = "smartphone")
-        tvs = res2.filter_by(category = "tv")
-        sessiondb.close()
-        return render_template("productsall.html", smartphones = smartphones, tvs = tvs, current_url=current_url)
 
-    if res1 == [[]]:
-        message = "No products found teu"
-        print("no products found")
-        sessiondb.close()
-        return render_template("productsfiltered.html", products1 = res1, current_url=current_url)
-    print(res2)
-    print("2")
+    if res1 == [] and lamp == 1:
+        if lamp:
+            products1 = res2.all()
+            return render_template("productsfiltered.html", products1 = products1, current_url = current_url)
+        else:
+            print("1")
+            smartphones = res2.filter_by(category = "smartphone")
+            tvs = res2.filter_by(category = "tv")
+            sessiondb.close()
+            return render_template("productsall.html", smartphones = smartphones, tvs = tvs, current_url=current_url)
+
+    
     sessiondb.close()
-    return render_template("productsfiltered.html", products1 = res1, current_url=current_url)
-    #return render_template("productsall.html", smartphones = smartphones, current_url = current_url)
+    smartphones = res2.filter_by(category = "smartphone")
+    tvs = res2.filter_by(category = "tv")
+    sessiondb.close()
+    return render_template("productsall.html", smartphones = smartphones, tvs = tvs, current_url=current_url)
 
 @products.route('/product-<id>')
 def product(id):

@@ -26,8 +26,10 @@
     </div>
     <div class="textoferti">Оферти на деня</div>
     <div class="products">
+        <button style="display:none;" class="behind">behind</button>
+        <button style="display:none;" class="behind">behind</button>
         {% for product in dict1 %}
-            <div class="product-card">
+            <div class="product-card 1">
                 <div class="border-image">
                     <img class = "card-image images" src="{{ dict1[product].image }}">
                 </div>
@@ -138,5 +140,6 @@
     <div class="footer"></div>
     <script type="text/javascript" src="./static/scripts/statii.js"></script>
     <script type="text/javascript" src="./static/scripts/image-adjust.js"></script>
+    <script type="text/javascript" src="./static/scripts/slider.js"></script>
 </body>
 {% endblock %}

@@ -615,6 +615,8 @@ a{
         margin-right:5%;
     }
     .product-card{
+        transition: 0.3s;
+        position:relative;
         width:150px;
         height:300px;
     }
@@ -720,5 +722,8 @@ a{
         margin-left:auto;
         margin-right:auto;
         float: none;
+    }
+    .product-card{
+        left:0px;
     }
 }
