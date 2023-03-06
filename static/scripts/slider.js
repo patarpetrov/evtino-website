@@ -7,20 +7,28 @@ let movePer = 1020;
 let maxMove = 3040;
 let touchendX = 0;
 let end = 0;
+//let index = 0;
 
 
-function checkDirection() {
+function checkDirection(index) {
     //console.log(touchstartX)
-    console.log(end);
+    console.log(index);
+    //console.log(end);
     l = end + ankara - touchstartX;
-    console.log(l);
+    //console.log(l);
+    if (index == 2){
+        product = document.getElementsByClassName('2');
+    }
+    if (index == 1){
+        product = document.getElementsByClassName('1');
+    }
     for(const i of product)
         {
             if (l < 0){
                 i.style.left =  l*2 + 'px';
             }
             else {
-                i.style.left = 0 + 'pc';
+                i.style.left = 0 + 'px';
             }
         }
   }
@@ -28,27 +36,40 @@ function checkDirection() {
 let mobile_view = window.matchMedia("(max-width: 768px)");
 if (mobile_view.matches)
 {
-    element = document.getElementsByClassName("products")[0];
-    //var bb = document.getElementById("products");
+    const products = document.getElementsByClassName('products');
+    //console.log(products);
+    let index = 0;
+    
+    for (const element of products){
+        index = index + 1;
 
-    element.addEventListener("touchstart", (e) => {
-    touchstartX = e.changedTouches[0].screenX;
-    //console.log(touchstartX);
-    });
-
-    element.addEventListener("touchend", (e) => {
-    touchendX = e.changedTouches[0].screenX;
-    end = end + (touchendX -  touchstartX);
-    if (end > 0){
-        end = 0;
-    }
-    });
-
-    element.addEventListener("touchmove", (e) => {
-        ankara = e.changedTouches[0].screenX;
-        //console.log(ankara);
-        checkDirection();
+        element.addEventListener("touchstart", (e) => {
+            touchstartX = e.changedTouches[0].screenX;
         });
+        
+        element.addEventListener("touchend", (e) => {
+        touchendX = e.changedTouches[0].screenX;
+        end = end + (touchendX -  touchstartX);
+        if (end > 0){
+            end = 0;
+        }
+        });
+        if (index != 2){
+            element.addEventListener("touchmove", (e) => {
+                ankara = e.changedTouches[0].screenX;
+                console.log(index);
+                checkDirection(1);
+            });
+        }
+        else {
+            element.addEventListener("touchmove", (e) => {
+                ankara = e.changedTouches[0].screenX;
+                checkDirection(2);
+            });
+        }
+    }
+
+   
     movePer = 1020;
     maxMove = 3040;
 }

@@ -45,7 +45,7 @@
     align-items: center;
 }
 .secondary-image-child{
-    height:110px;
+    height:95%;
     position: relative;
     float:left;
     transition: 0.2s;
@@ -96,10 +96,13 @@
     align-items:center;
     overflow:hidden;
     margin-bottom:3%;
+    display:grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
 }
 
 .sec{
-    height: 30px;
+    height: 50px;
     width:95%;
     padding-left:2.5%;
     margin-top:2.5%;
@@ -117,15 +120,14 @@
     width:16%;
 }
 .price-button{
-    width:25%;
-    height:100%;
-    margin-left: 100px;
+    height:25%;
     border-radius:50px;
     background-color:#2F2FA2;
-    float:left;
     color: white;
     display: flex;
     align-items: center;
+    width:fit-content;
+    margin-left:0;
 }
 .sale{
     background-color:#f64c72;
@@ -146,6 +148,11 @@
     font-size: 22px;
     font-weight: bold;
     margin-left: 10px;
+}
+.price{
+    display:grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
 }
 .sec-price{
     font-size:13px;
@@ -186,7 +193,6 @@
     text-align: center;
     display: flex;
     width: fit-content;
-    max-width: 50%;
     margin-left: auto;
     align-items: center;
     margin-right: auto;
@@ -265,7 +271,11 @@
 }
 @media only screen and (max-width: 768px){
     .wrapper-product{
-        display:none;
+        display:grid;
+        grid-template-columns: none;
+        grid-template-rows: 70% 30%;
+        margin-top:20px;
+        height:fit-content;
     }
     .main-image-phone{
         display:block;
@@ -274,5 +284,54 @@
         margin-right:auto;
         height:200px;
         background-color: red;
+    }
+    .wrapper-spec{
+        grid-template-columns: 50% 50%;
+        width:95%;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .main-store-text{
+        font-size: 14px;
+    }
+    .specification-all{
+        margin-top:50px;
+    }
+    .title-product{
+        font-size:14px;
+        height:fit-content;
+    }
+    .price-product{
+        display:grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+    }
+    .price{
+        display:grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+    }
+    .price-button{
+        height:25px;
+        width:fit-content;
+        margin-left:0;
+    }
+    .price-text-cena{
+        font-size: 12px;
+    }
+    .price-old-lev{
+        font-size: 8px;
+    }
+    .price-old-st{
+        font-size:8px;
+    }
+    .price-old-lv{
+        font-size:8px;
+    }
+    .spec-title{
+        font-size:16px;
+    }
+    .spec-content{
+        font-size:14px;
     }
 }

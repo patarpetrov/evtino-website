@@ -6,9 +6,6 @@
 
 {% endblock %}
 {% block main %}
-<div class="main-image-phone">
-    <img id >
-</div>
 <div class="wrapper-product">
     <div class="images">
         <div class="main-image main">
@@ -84,10 +81,10 @@
         {% if linkers[0] != '' and linkers[0] is not none %}
         <div class="price sec">
             {% if linkers[0].store == "emag" %}
-            <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
+            <img class="price-image sec-image images" src="./static/uploads/Logo_Color.png">
             {% endif%}
             {% if linkers[0].store == "technopolis" %}
-            <img class="price-image sec-image" src="./static/uploads/Technopolis_logo.png">
+            <img class="price-image sec-image images" src="./static/uploads/Technopolis_logo.png">
             {% endif%}
             <div class="price-button sale">
                 <div class="price-text-cena sec-price">Цена</div>
