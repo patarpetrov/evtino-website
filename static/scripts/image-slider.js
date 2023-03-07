@@ -9,11 +9,11 @@ let leftRight = 1;
 //left = 0
 //right = 1 
 let mobile_view = window.matchMedia("(max-width: 768px)");
-if (mobile_view.matches)
-{
-    movePer = 50.36;
-    maxMove = 504;
-}
+// if (mobile_view.matches)
+// {
+//     movePer = 50.36;
+//     maxMove = 504;
+// }
 let right_mover = ()=>{
     if (leftRight == 1){
     console.log("right");

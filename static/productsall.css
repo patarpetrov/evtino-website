@@ -127,4 +127,13 @@ span {
     .products{
         margin-left: 0px;
     }
+    a{
+        margin-left:10px;
+        width:150px;
+        position:relative;
+        transition: 0.1s;
+    }
+    .product-card{
+        margin-left: 0px;
+    }
 }

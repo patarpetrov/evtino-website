@@ -17,15 +17,16 @@ function checkDirection(index) {
     l = end + ankara - touchstartX;
     //console.log(l);
     if (index == 2){
-        product = document.getElementsByClassName('2');
+        ahref = document.getElementsByClassName('a2');
     }
     if (index == 1){
-        product = document.getElementsByClassName('1');
+        ahref = document.getElementsByClassName('a1');
     }
-    for(const i of product)
+    for(const i of ahref)
         {
             if (l < 0){
                 i.style.left =  l*2 + 'px';
+                
             }
             else {
                 i.style.left = 0 + 'px';

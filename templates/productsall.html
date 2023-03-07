@@ -42,7 +42,7 @@
             </div>
             <div class="category-background products">
                 {% for smartphone in smartphones%}
-                <a href="/products/product-{{smartphone.id}}">
+                <a class="a1" href="/products/product-{{smartphone.id}}">
                 <div class="product-card productall 1">
                     <img class="card-image" src="{{ smartphone.imagesrc }}">
                     <div class="content">
@@ -133,7 +133,7 @@
        
             <div class="category-background products">
                 {% for tv in tvs%}
-                <a href="/products/{{tv.id}}">
+                <a class="a2" href="/products/{{tv.id}}">
                 <div class="product-card productall 2">
                     <img class="card-image" src="{{ tv.imagesrc }}">
                     <div class="content">

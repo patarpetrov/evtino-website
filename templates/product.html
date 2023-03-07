@@ -55,12 +55,14 @@
     <div class="prices">
         <div class="title-product">{{product.productname}}</div>
         <div class="price-product">
-            {% if product.store == "emag" %}
-            <img class="price-image" src="./static/uploads/Logo_Color.png">
-            {% endif%}
-            {% if product.store == "technopolis" %}
-            <img class="price-image" src="./static/uploads/Technopolis_logo.png">
-            {% endif%}
+            <div class="sec-image-div">
+                {% if product.store == "emag" %}
+                <img class="price-image sec-image images" src="./static/uploads/Logo_Color.png">
+                {% endif%}
+                {% if product.store == "technopolis" %}
+                <img class="price-image sec-image images" src="./static/uploads/Technopolis_logo.png">
+                {% endif%}
+            </div>
             <div class="price-button sale">
                 <div class="price-text-cena">Цена</div>
                     <div class="price-old new product">
@@ -79,13 +81,15 @@
             </div>
         </div>
         {% if linkers[0] != '' and linkers[0] is not none %}
-        <div class="price sec">
-            {% if linkers[0].store == "emag" %}
-            <img class="price-image sec-image images" src="./static/uploads/Logo_Color.png">
-            {% endif%}
-            {% if linkers[0].store == "technopolis" %}
-            <img class="price-image sec-image images" src="./static/uploads/Technopolis_logo.png">
-            {% endif%}
+        <div class="price-product-store sec">
+            <div class="sec-image-div">
+                {% if linkers[0].store == "emag" %}
+                <img class="price-image sec-image images" src="./static/uploads/Logo_Color.png">
+                {% endif%}
+                {% if linkers[0].store == "technopolis" %}
+                <img class="price-image sec-image images" src="./static/uploads/Technopolis_logo.png">
+                {% endif%}
+            </div>
             <div class="price-button sale">
                 <div class="price-text-cena sec-price">Цена</div>
                     <div class="price-old new product">
@@ -105,13 +109,15 @@
         </div>
         {% endif %}
         {% if linkers[1] != '' and linkers[1] is not none %}
-        <div class="price sec">
-            {% if linkers[1].store == "emag" %}
-            <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
-            {% endif%}
-            {% if linkers[1].store == "technopolis" %}
-            <img class="price-image sec-image" src="./static/uploads/Technopolis_logo.png">
-            {% endif%}
+        <div class="price-product-store sec">
+            <div class="sec-image-div">
+                {% if linkers[1].store == "emag" %}
+                <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
+                {% endif%}
+                {% if linkers[1].store == "technopolis" %}
+                <img class="price-image sec-image" src="./static/uploads/Technopolis_logo.png">
+                {% endif%}
+            </div>
             <div class="price-button sale">
                 <div class="price-text-cena sec-price">Цена</div>
                     <div class="price-old new product">
@@ -131,13 +137,15 @@
         </div>
         {% endif %}
         {% if linkers[2] != '' and linkers[2] is not none %}
-        <div class="price sec">
-            {% if linkers[2].store == "emag" %}
-            <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
-            {% endif%}
-            {% if linkers[2].store == "technopolis" %}
-            <img class="price-image sec-image" src="./static/uploads/Technopolis_logo.png">
-            {% endif%}
+        <div class="price-product-store sec">
+            <div class="sec-image-div">
+                {% if linkers[1].store == "emag" %}
+                <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
+                {% endif%}
+                {% if linkers[1].store == "technopolis" %}
+                <img class="price-image sec-image" src="./static/uploads/Technopolis_logo.png">
+                {% endif%}
+            </div>
             <div class="price-button sale">
                 <div class="price-text-cena sec-price">Цена</div>
                     <div class="price-old new product">
@@ -157,7 +165,7 @@
         </div>
         {% endif %}
         {% if linkers[3] != '' and linkers[3] is not none %}
-        <div class="price sec">
+        <div class="price-product-store sec">
             {% if linkers[3].store == "emag" %}
             <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
             {% endif%}
@@ -183,7 +191,7 @@
         </div>
         {% endif %}
         {% if linkers[4] != '' and linkers[4] is not none %}
-        <div class="price sec">
+        <div class="price-product-store sec">
             {% if linkers[4].store == "emag" %}
             <img class="price-image sec-image" src="./static/uploads/Logo_Color.png">
             {% endif%}
@@ -266,7 +274,7 @@
 </div>
 
 <div class="main-store">
-    <a style="margin-left:auto; margin-right:auto;" href="{{product.link}}">
+    <a style="margin-left:auto; margin-right:auto; width:fit-content;" href="{{product.link}}">
         <div class ="main-store-text">За повече информация за продукта посете сайта на продавата</div>
     </a>
 </div>
@@ -274,7 +282,7 @@
 <div class="category-background-product">
 
     {% for simprod in similar %}
-    <a href="/products/product-{{simprod.id}}">
+    <a class="a1" href="/products/product-{{simprod.id}}">
     <div class="product-card productall 1">
         <img class="card-image" src="{{ simprod.imagesrc }}">
         <div class="content">

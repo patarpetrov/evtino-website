@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from flask import render_template
+from functions import *
 
 from sqlalchemy.orm import sessionmaker
 from app import engine, ALLOWED_CATEGORIES, Post, Products, Productstore, Productstorespec
@@ -8,8 +9,9 @@ products = Blueprint('products', __name__, template_folder= 'templates', static_
 
 @products.route('/')
 def index():
-    Session = sessionmaker(bind=engine)
-    sessiondb = Session()
+    #Session = sessionmaker(bind=engine)
+    #sessiondb = Session()
+    sessiondb = sessionMake(engine)
     db = sessiondb.query(Productstore).join(Productstorespec, Productstorespec.main == Productstore.id, isouter=True)
     smartphones = db.filter_by(category = "smartphone").all()
 
@@ -74,8 +76,9 @@ def index():
 
 @products.route('/product-<id>')
 def product(id):
-    Session = sessionmaker(bind=engine)
-    sessiondb = Session()
+    #Session = sessionmaker(bind=engine)
+    #sessiondb = Session()
+    sessiondb = sessionMake(engine)
     linkers = []
     product = sessiondb.query(Productstore).filter_by(id = id).first()
     specification = sessiondb.query(Productstorespec).filter_by(main = id).first()

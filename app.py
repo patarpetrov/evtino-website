@@ -1,7 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
-
+from functions import *
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -123,8 +123,9 @@ def sessionerror():
 @app.route("/", methods=["GET"])
 def index():
     if request.method == "GET":
-        Session = sessionmaker(bind=engine)
-        sessiondb = Session()
+        #Session = sessionmaker(bind=engine)
+        #sessiondb = Session()
+        sessiondb = sessionMake(engine)
         postsall = sessiondb.query(Post).limit(5).all()
 
         with open("./static/top5.json", "r", encoding="utf-8") as f:
@@ -165,8 +166,9 @@ def napishi():
     if request.method == "GET":
         return render_template("din-napishi.html")
     if request.method == "POST":
-        Session = sessionmaker(bind=engine)
-        sessiondb = Session()
+        #Session = sessionmaker(bind=engine)
+        #sessiondb = Session()
+        sessiondb = sessionMake(engine)
 
 
 
@@ -250,8 +252,9 @@ def product():
 @login_required
 def prodspec():
     if request.method == "GET": 
-        Session = sessionmaker(bind=engine)
-        sessiondb = Session()
+        #Session = sessionmaker(bind=engine)
+        #sessiondb = Session()
+        sessiondb = sessionMake(engine)
 
         res = sessiondb.query(Productstore).all()
         sessiondb.close()
@@ -261,16 +264,18 @@ def prodspec():
 @login_required
 def prodspec1(id):
     if request.method == "GET":
-        Session = sessionmaker(bind=engine)
-        sessiondb = Session()
+        #Session = sessionmaker(bind=engine)
+        #sessiondb = Session()
+        sessiondb = sessionMake(engine)
 
         product = sessiondb.query(Productstore).filter_by(id = id).first()
         sessiondb.close()
         return render_template("admaddprodspec.html", product = product)
 
     if request.method == "POST":
-        Session = sessionmaker(bind=engine)
-        sessiondb = Session()
+        #Session = sessionmaker(bind=engine)
+        #sessiondb = Session()
+        sessiondb = sessionMake(engine)
 
         res = sessiondb.query(Productstore).filter_by(id = id).first()
         new = sessiondb.query(Productstorespec).filter_by(main = res.id).first()
@@ -332,8 +337,9 @@ def prodspec1(id):
 @login_required
 def statii():
     if request.method == "GET":
-        Session = sessionmaker(bind=engine)
-        sessiondb = Session()
+        #Session = sessionmaker(bind=engine)
+        #sessiondb = Session()
+        sessiondb = sessionMake(engine)
 
         all_statii = sessiondb.query(Post).all()
         sessiondb.close()
@@ -344,8 +350,9 @@ def statii():
 @login_required
 def statii1(slug):
     if request.method == "GET":
-        Session = sessionmaker(bind=engine)
-        sessiondb = Session()
+        #Session = sessionmaker(bind=engine)
+        #sessiondb = Session()
+        sessiondb = sessionMake(engine)
 
         statia = sessiondb.query(Post).filter_by(slug = slug).first()
         products = sessiondb.query(Products).filter_by(pageused = statia).all()
@@ -354,8 +361,9 @@ def statii1(slug):
         return render_template("adminstatia.html", statia = statia, products=products)
     
     if request.method == "POST":
-        Session = sessionmaker(bind=engine)
-        sessiondb = Session()
+        #Session = sessionmaker(bind=engine)
+        #sessiondb = Session()
+        sessiondb = sessionMake(engine)
         statia = sessiondb.query(Post).filter_by(slug = slug).first()
         products = sessiondb.query(Products).filter_by(pageused = statia).all()
 
@@ -384,7 +392,3 @@ def statii1(slug):
         sessiondb.commit()
         sessiondb.close()
         return redirect("/adminstatii")
-
-
-
-

@@ -74,7 +74,7 @@
 
 }
 .statia-all{
-    
+    margin-top:10px;
     width: 80%;
     margin-left:auto;
     margin-right:auto;
@@ -87,7 +87,7 @@
     display:flex;
     align-items: center;
 }
-.border-image{
+.border-image-statii{
     height:250px;
     margin-left:auto;
     margin-right:auto;
@@ -97,4 +97,46 @@
     font-family: var(--font-family-rubik_mono_one);
     font-size:26px;
     text-align:center;
+}
+@media only screen and (max-width: 768px){
+    .main-statii{
+        display:none;
+    }
+    .border{
+        display:none;
+    }
+    .more-statii{
+        margin-top:50px;
+    }
+    .statia-all{
+        grid-template-columns: 35% 65%;
+        gap: 0;
+        height: 150px;
+    }
+    .border-image-statii{
+        background-color:#2F2FA2;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        height:150px;
+        display:flex;
+        align-items: center;
+        width:105px;
+    }
+    .statia-secondary{
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .content-statiq-secondary{
+        display:flex;
+        align-items: center;
+        max-width: 195px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .content-statia-secondary-intro{
+        display:none;
+    }
+    .content-statiq-secondary-title{
+        font-size: 18px;
+    }
 }
