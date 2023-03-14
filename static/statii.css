@@ -13,12 +13,18 @@ h1 {
 }
 .box {
     width: 70%;
-    margin-left: 5%;
+    max-width: 1000px;
     height: 150vh;
     background-color: #F1F1F1;
     margin-bottom:10%;
     padding-top:2%;
     border-radius:10px;
+}
+.wrapper-statia{
+    width: 100%;
+    max-width:1280px;
+    margin-left:auto;
+    margin-right:auto;
 }
 .image-content{
     align-items: center;
@@ -100,4 +106,47 @@ h2 {
 }
 .logo{
     height:100%;
+}
+
+@media only screen and (max-width: 768px){
+    .wrapper-statia{
+        width:95%;
+    }
+    .content1{
+        display:block;
+    }
+    .box{
+        width:100%;
+    }
+    .image-content{
+        width:300px;
+        height:fit-content;
+    }
+    .info-content{
+        width: 275px;
+        margin-left:auto;
+        margin-right:auto;
+        padding-left:0;
+        padding-right:0;
+    }
+    .info-content p{
+        font-size:12px;
+    }
+    .title-statia-product{
+        margin-top:0;
+        font-size:16px;
+    }
+    .row{
+        flex-direction: column;
+        gap: 15px;
+    }
+    .item{
+        font-size:12px;
+    }
+    .specs{
+        font-size:16px;
+    }
+    .title-statia-main{
+        height:fit-content;
+    }
 }
