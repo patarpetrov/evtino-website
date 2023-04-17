@@ -3,7 +3,7 @@ let product = document.getElementsByClassName('1');
 let l = 0;
 let product_page = 5;
 let current_page = 1;
-let movePer = 1020;
+let movePer = 520;
 let maxMove = 3040;
 let touchendX = 0;
 let end = 0;
@@ -79,13 +79,13 @@ if (mobile_view.matches)
 let right_mover = (a)=>{
     //console.log("dqsno")
     if (a == 0 || a == 1 ){
-        //console.log(a)
-        product = document.getElementsByClassName('1');
+        console.log(a)
+        product = document.getElementsByClassName('a1');
         //product_page = Math.ceil(product.length/4);
     }
     if (a == 2 || a == 3 ){
         //console.log(a)
-        product = document.getElementsByClassName('2');
+        product = document.getElementsByClassName('a2');
         //product_page = Math.ceil(product.length/4);
     }
     //console.log(current_page);
@@ -103,19 +103,19 @@ let right_mover = (a)=>{
             if (l > maxMove) {
                 //console.log("moover");
                 l = l - movePer;}
-            i.style.left = '-' + 100 + 'px';
+            i.style.left = '-' + l + 'px';
         }
 }
 }
 let left_mover = (a)=>{
     if (a == 0 || a == 1 ){
         console.log(a);
-        product = document.getElementsByClassName('1');
+        product = document.getElementsByClassName('a1');
     }
     l = l - movePer;
     if (a == 2 || a == 3 ){
         console.log(a);
-        product = document.getElementsByClassName('2');
+        product = document.getElementsByClassName('a2');
     }
     if (current_page != 1){
     current_page = current_page - 1;

@@ -4,9 +4,12 @@
     --font-family-inter: "Inter";
 }
 .category-background{
+    display:grid;
+    grid-auto-flow: column;
 
+    gap:10px;
     height: 475px;
-    width: 3040px;
+    width: fit-content;
     overflow:hidden;
     background-color: #F1F1FF;
     border-bottom-left-radius: 10px;
@@ -107,6 +110,18 @@ span {
     
     margin-left:10px;
     font-size:24px;
+}
+.a1{
+    position:relative;
+    float:left;
+    transition:0.2s;
+    left:0;
+}
+.a2{
+    position: relative;
+    float:left;
+    transition:0.2s;
+    left:0;
 }
 @media only screen and (max-width: 768px){
     .wrapper{

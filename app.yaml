@@ -1,0 +1,6 @@
+runtime: python310
+
+env_variables:
+  AWS_ACCESS_KEY_ID: VALUE
+  AWS_SECRET_ACCESS_KEY: ST+couKoK05MfJLSqbm8V+7Uvu9nmM5q7mCA5zcP
+  DATABASE_URI: postgresql://evtino_user:7Gn99jhwihLA8EVcNIZCdI1fZhIt7IqG@dpg-cfcis3en6mpierpgf3h0-a.frankfurt-postgres.render.com/evtino

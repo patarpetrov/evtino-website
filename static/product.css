@@ -88,7 +88,7 @@
     transition: 0.2s;
 }
 .price-product{
-    height: 50px;
+    height: fit-content;
     width:95%;
     padding-left:2.5%;
     margin-top:2.5%;

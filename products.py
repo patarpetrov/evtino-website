@@ -54,10 +54,12 @@ def index():
     if tempdict['ram']:
         lamp = 2
         for i in tempdict['ram']:
-            res1 += (res2.filter_by(spec1 = i).all())
+            res1 += (res2.filter_by(spec4 = i).all())
 
+    print(res1)
     if res1 == [] and lamp == 1:
         if lamp:
+            print("2")
             products1 = res2.all()
             return render_template("productsfiltered.html", products1 = products1, current_url = current_url)
         else:
@@ -67,12 +69,13 @@ def index():
             sessiondb.close()
             return render_template("productsall.html", smartphones = smartphones, tvs = tvs, current_url=current_url)
 
-    
-    sessiondb.close()
     smartphones = res2.filter_by(category = "smartphone")
     tvs = res2.filter_by(category = "tv")
     sessiondb.close()
     return render_template("productsall.html", smartphones = smartphones, tvs = tvs, current_url=current_url)
+    #sessiondb.close()
+    #if res1 == []
+    #return render_template("productsfiltered.html", products1 = res1, current_url = current_url)
 
 @products.route('/product-<id>')
 def product(id):
@@ -91,5 +94,6 @@ def product(id):
     print(linkers)
     similar = sessiondb.query(Productstore).join(Productstorespec, Productstorespec.main == Productstore.id, isouter=True).filter_by(category = specification.category).limit(5).all()
     print(similar)
+    print(specification)
     sessiondb.close()
     return render_template("product.html", product = product, specification = specification, linkers = linkers, similar=similar)

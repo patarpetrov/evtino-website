@@ -29,9 +29,9 @@ from models import *
 Base.metadata.create_all(engine)
 base = declarative_base()
 #Productstorespec.__table__.drop(engine)
-#Productstore.__table__.drop(engine)
-#Products.__table__.drop(engine)
-#Post.__table__.drop(engine)
+# Productstore.__table__.drop(engine)
+# Products.__table__.drop(engine)
+# Post.__table__.drop(engine)
 
 from scraping import scrapeTechnopolis, scrapeEmag
 
@@ -74,6 +74,7 @@ def checkandSaveFileLink(files):
             files1.append(emag_filename)
         else:
             files1.append('')
+    print(files1)
     return files1
 
 
@@ -309,7 +310,7 @@ def prodspec1(id):
         for i in range(len(files1) - 1):
             if files1[i] != "":
                 string = f"imagepath{i}"
-                setattr(new, string, i)
+                setattr(new, string, files1[i])
         # if files1[0] != '':
         #     new.imagepath1 = files1[0]
         # if files1[1] != '':
@@ -328,6 +329,7 @@ def prodspec1(id):
 
         if files1[7] != '': res.imagesrc = files1[7]
         new.main = res.id
+        print(new)
         sessiondb.add(new)
         sessiondb.commit()
         sessiondb.close()
